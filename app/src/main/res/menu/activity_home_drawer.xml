@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <!--<item-->
+            <!--android:id="@+id/nav_cropmanagement"-->
+            <!--android:icon="@drawable/fruits"-->
+            <!--android:title="Fruits Crops" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_medicine"-->
+            <!--android:icon="@drawable/fruits"-->
+            <!--android:title="Medicinal Crops" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_plantation"-->
+            <!--android:icon="@drawable/fruits"-->
+            <!--android:title="Plantation Crops" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_pulses"-->
+            <!--android:icon="@drawable/ic_action_fruits"-->
+            <!--android:title="Pulses Crops" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_spices"-->
+            <!--android:icon="@drawable/fruits"-->
+            <!--android:title="Spices Crops" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_vegestables"-->
+            <!--android:icon="@drawable/fruits"-->
+            <!--android:title="Vegestable Crops" />-->
+
+        <item
+            android:id="@+id/nav_suggested"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Suggested Crops" />
+
+        <item
+            android:id="@+id/nav_fertilizers"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Fertilizers" />
+    </group>
+
+</menu>

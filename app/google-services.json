@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "462660938031",
+    "project_id": "cropmanagementapp-ba8af",
+    "storage_bucket": "cropmanagementapp-ba8af.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462660938031:android:c3f4bf0dca7f506a65d9da",
+        "android_client_info": {
+          "package_name": "com.cma.thesis.cropmanagementapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7OV_sW2M_tasf840Nv4grzWOrAQACcMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

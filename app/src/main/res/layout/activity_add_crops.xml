@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cma.thesis.cropmanagementapp.Activity_AddCrops">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/etcropnameupdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:allowUndo="true"
+            android:ems="10"
+            android:hint="Enter Crop Name"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/etdescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:allowUndo="true"
+            android:ems="10"
+            android:hint="Enter Description"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etdescription"
+        android:layout_marginTop="39dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imgCropImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btnchooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imgCropImage"
+        android:layout_toEndOf="@+id/etdescription"
+        android:layout_toRightOf="@+id/etdescription"
+        android:text="Choose Image" />
+
+    <Button
+        android:id="@+id/btnsaveCrops"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:text="Save"
+        android:layout_below="@+id/btnchooseImage"
+        android:layout_alignLeft="@+id/btnchooseImage"
+        android:layout_alignStart="@+id/btnchooseImage"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp" />
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgcropImageupdate"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+       android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <EditText
+        android:id="@+id/etcropnameupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imgcropImageupdate"
+        android:layout_marginTop="59dp"
+        android:ems="10"
+        android:hint="Crop Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etdescriptionupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/etcropnameupdate"
+         />
+
+    <Button
+        android:id="@+id/btnupdateCrops"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="Update"
+        android:layout_below="@+id/etdescriptionupdate"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/txtidupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imgcropImageupdate"
+        android:layout_marginTop="36dp" />
+</RelativeLayout>

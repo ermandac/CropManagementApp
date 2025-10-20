@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_Reply">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tvCommentSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:maxLines="6"
+            android:text=""
+            android:textColor="@color/darkblue"
+            android:textSize="13dp"
+            android:maxLength="280"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvCommentSubjectDate"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvCommentSubject"
+            android:layout_alignParentRight="true"
+            android:text="test"
+            android:textColor="@color/yellow" />
+
+        <TextView
+            android:id="@+id/tvSubjectID"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvCommentSubjectDate"
+            android:layout_alignParentRight="true"
+            android:text="test"
+            android:textColor="@color/yellow" />
+        <TextView
+            android:id="@+id/tvSubjectCropid"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvSubjectID"
+            android:layout_alignParentRight="true"
+            android:text="test"
+            android:textColor="@color/yellow" />
+
+        <ListView
+            android:id="@+id/listview_reply"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_below="@id/tvCommentSubject"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/txtreply"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter reply here"
+            android:lines="8"
+            android:maxLines="10"
+            android:minLines="3"
+            android:scrollbars="vertical"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:id="@+id/btnsaveReply"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/txtreply"
+            android:text="Save"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary1">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="title_background">#ff355689</color>
+    <color name="title_text">#ffffffff</color>
+    <color name="title_text_alt">#ff000000</color>
+    <color name="foreground1">#ff355689</color>
+    <color name="foreground2">#ff7081a3</color>
+    <color name="background1">#ffffff</color>
+    <color name="background2">#d5ddeb</color>
+    <color name="background3">#ffe3e8f1</color>
+    <color name="title_separator">#40ffffff</color>
+
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="accent">#03a9f4</color>
+    <color name="primary_text">#FFFFFF</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+
+    <color name="colorPrimary">#e74c3c</color>
+    <color name="colorPrimaryDark1">#ec7063</color>
+    <color name="colorAccent1">#f93283</color>
+    <color name="purple">#7c4dff</color>
+    <color name="yellow">#ffb300</color>
+    <color name="green">#00bfa5</color>
+    <color name="darkblue">#2980b9</color>
+    <color name="darkpurple">#a569bd</color>
+    <color name="pinky">#fe104d</color>
+    <color name="lightgray">#808080</color>
+</resources>

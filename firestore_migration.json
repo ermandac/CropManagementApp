@@ -1,0 +1,288 @@
+{
+  "categories": {
+    "1": {
+      "id": 1,
+      "category": "fruits",
+      "image": null,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.888882"
+      }
+    },
+    "2": {
+      "id": 2,
+      "category": "vegetables",
+      "image": null,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.888882"
+      }
+    },
+    "3": {
+      "id": 3,
+      "category": "pulses",
+      "image": null,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.888882"
+      }
+    },
+    "4": {
+      "id": 4,
+      "category": "spices",
+      "image": null,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.888882"
+      }
+    },
+    "5": {
+      "id": 5,
+      "category": "plantation",
+      "image": null,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.889393"
+      }
+    },
+    "6": {
+      "id": 6,
+      "category": "medicinal",
+      "image": null,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.889393"
+      }
+    }
+  },
+  "crops": {
+    "9": {
+      "id": 9,
+      "categoryId": 1,
+      "cropName": "Banana",
+      "description": "A major global fruit crop, rich in potassium and fiber. Cultivated in tropical and subtropical regions. The plant is a large herbaceous flowering plant.",
+      "image": null,
+      "scienceName": "Musa paradisiaca L. Musaceae",
+      "duration": "12–18 months (from planting to harvest of bunch)",
+      "varieties": [
+        "Cavendish",
+        " Lakatan",
+        " Saba",
+        " Grand Nain"
+      ],
+      "soilClimate": "Deep, rich, well-drained loamy soils are ideal. Requires warm, humid, and frost-free conditions. pH 5.5–6.5.",
+      "season": "Planted year-round in tropical areas; usually June to July for peak season.",
+      "materials": "Suckers (seedlings from the base of the parent plant)",
+      "mainField": "Dig 45×45×45 cm pits. Fill with topsoil, FYM, and a nematicide. Plant suckers upright.",
+      "weedControl": "Regular manual weeding is essential. Herbicides like Diuron or Paraquat can be used to control weeds in inter-rows.",
+      "irrigation": "Requires copious water, especially during summer and the flowering period. Apply water every 3–7 days in dry spells. Drip irrigation is highly effective.",
+      "growthManagement": "Desuckering (removing unwanted suckers) and propping (supporting bunches with bamboo) are crucial. Bagging the bunch protects fruit from pests and improves appearance.",
+      "harvesting": "Harvested when the fruit is plump, fully developed, but still green. Maturity is judged by the angularity of the fruit, which becomes less angular as it matures.",
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.889997"
+      }
+    },
+    "10": {
+      "id": 10,
+      "categoryId": 1,
+      "cropName": "Orange",
+      "description": "One of the most important citrus fruits, valued for its high Vitamin C content and juice. Grown widely in subtropical climates.",
+      "image": null,
+      "scienceName": "Citrus sinensis (L.) Osbeck Rutaceae",
+      "duration": "Perennial; takes 3–5 years to bear fruit, productive for 20+ years.",
+      "varieties": [
+        "Valencia",
+        " Navel",
+        " Hamlin",
+        " Blood Orange"
+      ],
+      "soilClimate": "Well-drained, deep, loamy soils are preferred. Cannot tolerate waterlogging or high salinity. Optimal pH 6.0–7.5.",
+      "season": "Flowering occurs in late winter/early spring; harvest depends on variety, usually late autumn to spring.",
+      "materials": "Grafted seedlings from a registered nursery, budded onto appropriate rootstocks (e.g., Rough Lemon).",
+      "mainField": "Prepare the field by ploughing and leveling. Dig pits 60×60×60 cm, fill with FYM and soil mixture. Plant grafts carefully.",
+      "weedControl": "Inter-cultivation and chemical control with Glyphosate or Simazine can be used. Maintain a clean basin around the tree.",
+      "irrigation": "Requires moderate, regular irrigation, especially during flowering and fruit development. Stress can cause fruit drop. Avoid overhead irrigation.",
+      "growthManagement": "Pruning to remove dead wood and open the canopy. Girdling or ring-barking can sometimes be done to induce flowering in shy bearers.",
+      "harvesting": "Harvested when the fruit reaches optimum size, color, and sugar/acid ratio (Brix). Hand picking is common to avoid damage.",
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.889997"
+      }
+    },
+    "11": {
+      "id": 11,
+      "categoryId": 1,
+      "cropName": "Papaya",
+      "description": "A fast-growing tropical fruit known for its soft, buttery flesh and medicinal properties. Rich in Vitamin A and the enzyme papain.",
+      "image": null,
+      "scienceName": "Carica papaya L. Caricaceae",
+      "duration": "6–12 months (from planting to first harvest); productive for 3–4 years.",
+      "varieties": [
+        "Pusa Dwarf",
+        " Coorg Honey Dew",
+        " Solo",
+        " Red Lady"
+      ],
+      "soilClimate": "Well-drained, sandy loam soil is best. Highly sensitive to waterlogging. Requires a warm climate and is susceptible to frost. pH 6.0–7.0.",
+      "season": "Planted during the beginning of the rainy season (June–July) or early spring (Feb–March).",
+      "materials": "Seeds or seedlings (raised in polybags)",
+      "mainField": "Deep ploughing and harrowing. Plant seedlings in pits 50×50×50 cm. Plant 2-3 seedlings per pit to ensure at least one female or hermaphrodite plant survives.",
+      "weedControl": "Shallow cultivation to prevent root damage. Herbicides like Fluchloralin pre-planting or Glyphosate post-emergence can be used between plants.",
+      "irrigation": "Irrigate frequently but lightly, especially in dry months. Waterlogging must be avoided at all costs. Drip irrigation is recommended.",
+      "growthManagement": "Thinning to retain one healthy female or hermaphrodite plant per pit. Mulching helps conserve moisture and control weeds.",
+      "harvesting": "Harvested when the fruit shows a slight yellow streak (color break) at the distal end, or fully ripe if for local consumption.",
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.890513"
+      }
+    },
+    "12": {
+      "id": 12,
+      "categoryId": 1,
+      "cropName": "Pineapple",
+      "description": "A tropical fruit known for its unique flavor and enzyme content (bromelain). Highly prized globally, often grown on raised beds.",
+      "image": null,
+      "scienceName": "Ananas comosus (L.) Merr. Bromeliaceae",
+      "duration": "18–24 months (to first fruit); 12–15 months (for ratoon crop).",
+      "varieties": [
+        "Queen",
+        " Kew",
+        " Mauritius",
+        " Smooth Cayenne"
+      ],
+      "soilClimate": "Grows well in slightly acidic ( pH 5.0–6.0), light, sandy loam soil. Needs moderate rainfall and good drainage.",
+      "season": "Planting is best done during the rainy season (June–September).",
+      "materials": "Suckers, slips, or crown sections (the top part of the fruit). Suckers are preferred for faster harvest.",
+      "mainField": "Prepare land by ploughing and harrowing. Plant in double or single rows on raised beds/trenches for drainage.",
+      "weedControl": "Regular manual weeding, especially in the first 6 months. Diuron is a common pre-emergence herbicide used to manage weeds.",
+      "irrigation": "A rainfed crop, but irrigation is critical during dry spells for better growth and fruit size. Water sparingly but regularly.",
+      "growthManagement": "Ethephon or NAA is commonly applied to induce uniform flowering and fruit set, which is essential for commercial harvesting.",
+      "harvesting": "Harvested when the fruit turns yellow-orange at the base. Use a sharp knife to cut the stalk with a few inches of stem attached.",
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.890513"
+      }
+    },
+    "13": {
+      "id": 13,
+      "categoryId": 1,
+      "cropName": "Guava",
+      "description": "A common tropical fruit, highly tolerant and rich in Vitamin C, pectin, and antioxidants.",
+      "image": null,
+      "scienceName": "Psidium guajava L. Myrtaceae",
+      "duration": "Perennial; starts bearing 2–3 years after planting; productive for over 30 years.",
+      "varieties": [
+        "Allahabad Safeda",
+        " Sardar Guava",
+        " L-49 (Lucknow-49)"
+      ],
+      "soilClimate": "Adaptable to many soils, but thrives best in deep, well-drained clay loam or sandy loam. Tolerant of moderate alkalinity. pH 6.5–7.5.",
+      "season": "Planted during the beginning of the monsoon (July–August).",
+      "materials": "Grafted or air-layered plants (preferred over seed-grown for true-to-type yield).",
+      "mainField": "Dig pits 60×60×60 cm. Fill with topsoil, FYM, and a suitable insecticide. Plant the graft/layer in the center.",
+      "weedControl": "Keep the tree basin clean. Manual hoeing and mulching are common. Chemical control is less frequent; use systemic herbicides cautiously.",
+      "irrigation": "Young plants need regular irrigation. Mature trees are hardy but benefit from water during the fruit development stage, especially in hot, dry periods.",
+      "growthManagement": "Pruning is necessary to maintain shape and encourage new growth. Crop regulation (removing flowers/fruits in certain seasons) is done to ensure a quality main crop.",
+      "harvesting": "Harvested when the fruit changes from dark green to light green or yellowish-green, and is still firm. Hand picking is the standard method.",
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.890513"
+      }
+    }
+  },
+  "procedures": {
+    "1": {
+      "id": 1,
+      "cropId": 1,
+      "stepNo": 1,
+      "stepProcedure": "\nPurchase rice seeds from any gardening or farmers supply store. ",
+      "notifDays": 1,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.891032"
+      }
+    },
+    "2": {
+      "id": 2,
+      "cropId": 1,
+      "stepNo": 2,
+      "stepProcedure": "Choose your planting location. ",
+      "notifDays": 2,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.891545"
+      }
+    },
+    "3": {
+      "id": 3,
+      "cropId": 1,
+      "stepNo": 3,
+      "stepProcedure": "Gather at least 1 to 2 ounces (28.5 to 56.5 g) of rice seeds to sow. Soak the seeds in water to prep them for planting. Allow them to soak for at least 12 hours but not longer than 36 hours. Remove the seeds from the water afterward. ",
+      "notifDays": 3,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.891545"
+      }
+    },
+    "4": {
+      "id": 4,
+      "cropId": 1,
+      "stepNo": 4,
+      "stepProcedure": "Plant the rice seeds throughout the soil, during the fall or spring season. Get rid of the weeds, till the beds, and level the soil. If you are using buckets, fill them with at least 6 inches (15 cm) of moist soil. Then add the rice seeds. ",
+      "notifDays": 5,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.891545"
+      }
+    },
+    "5": {
+      "id": 5,
+      "cropId": 1,
+      "stepNo": 5,
+      "stepProcedure": "\nFill the buckets or the garden space with at least 2 inches (5.1 cm) of water. ",
+      "notifDays": 6,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.891545"
+      }
+    },
+    "6": {
+      "id": 6,
+      "cropId": 1,
+      "stepNo": 6,
+      "stepProcedure": "\nThin, or space out, the rice seeds to prevent crowding. For best results, thin out the seedlings no more than 4 inches (10.2 cm) apart in rows that range between 9 to 12 inches (22.9 to 30.5 cm) apart. Allow the seeds to grow up to 7 inches (17.8 cm) tall, which takes on average of about one month. ",
+      "notifDays": 7,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.892061"
+      }
+    },
+    "7": {
+      "id": 7,
+      "cropId": 1,
+      "stepNo": 7,
+      "stepProcedure": "\nWait for the rice grains to mature. ",
+      "notifDays": 100,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.892581"
+      }
+    },
+    "8": {
+      "id": 8,
+      "cropId": 1,
+      "stepNo": 8,
+      "stepProcedure": "Harvest the rice",
+      "notifDays": 102,
+      "createdAt": {
+        "_type": "Timestamp",
+        "value": "2025-10-20T13:00:52.893101"
+      }
+    }
+  },
+  "metadata": {
+    "exportDate": "2025-10-20T13:00:52.887857",
+    "exportTool": "migrate_to_firestore.py v1.0"
+  }
+}

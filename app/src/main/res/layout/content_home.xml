@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/home_btn_fruits"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_fruits"
+                    android:onClick="onClickFruits"
+                    android:text="@string/cat_fruit" />
+
+                <Button
+                    android:id="@+id/home_btn_medecinal"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_medecinal"
+                    android:onClick="onClickMedicinal"
+                    android:text="@string/cat_medicine" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/home_btn_plantation"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_plantation"
+                    android:onClick="onClickPlantation"
+                    android:text="@string/cat_plantation" />
+
+                <Button
+                    android:id="@+id/home_btn_pulses"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_pulses"
+                    android:onClick="onClickPulses"
+                    android:text="@string/cat_pulses" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/home_btn_spices"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_spices"
+                    android:onClick="onClickSpices"
+                    android:text="@string/cat_spices" />
+
+                <Button
+                    android:id="@+id/home_btn_vegestables"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_vegestables"
+                    android:onClick="onClickVeges"
+                    android:text="@string/cat_vegestables" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/home_btn_organic"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/home_organic"
+                    android:onClick="onClickOrganic"
+                    android:text="@string/cat_organic" />
+
+                <Button
+                    android:id="@+id/home_btn_pest"
+                    style="@style/HomeButton"
+                    android:drawableTop="@drawable/pest"
+                    android:onClick="onClickPest"
+                    android:text="@string/cat_pest" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
