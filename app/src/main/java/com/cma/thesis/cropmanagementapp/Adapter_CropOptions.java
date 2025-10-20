@@ -33,6 +33,13 @@ public class Adapter_CropOptions extends BaseAdapter {
     private ArrayList<Class_Weeds> weedsList;
     private Adapter_WeedControl weedsAdapter;
     
+    // For new expandable items (text-only content)
+    private String introductionText = "";
+    private String scientificNameText = "";
+    private String durationText = "";
+    private String irrigationText = "";
+    private String harvestingText = "";
+    
     public Adapter_CropOptions(Context context, String[] items, String cropId) {
         this.context = context;
         this.items = items;
@@ -81,9 +88,10 @@ public class Adapter_CropOptions extends BaseAdapter {
         
         holder.txtItem.setText(items[position]);
         
-        // Check if this is an expandable item (4, 5, 6, or 7)
-        if (position == 4 || position == 5 || position == 6 || position == 7) {
-            // Set click listener on the text item itself
+        // Check if this is an expandable item (1, 2, 3, 4, 5, 6, 7, 8, 9)
+        // 1: Introduction, 2: Scientific Name, 3: Duration, 4: Varieties, 5: Season, 6: Materials, 7: Weed Control, 8: Irrigation, 9: Harvesting
+        if (position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7 || position == 8 || position == 9) {
+            // Set click listener on the text item itself ONLY for expandable items
             holder.txtItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -93,7 +101,40 @@ public class Adapter_CropOptions extends BaseAdapter {
             
             if (expandedPosition == position) {
                 // Handle different types of expandable content
-                if (position == 5) {
+                if (position == 1) {
+                    // Introduction - text only
+                    holder.expandableSection.setVisibility(View.GONE);
+                    holder.expandableTextSection.setVisibility(View.VISIBLE);
+                    holder.expandableTextTitle.setText("Introduction:");
+                    
+                    if (introductionText.isEmpty()) {
+                        loadIntroductionFromDatabase();
+                    }
+                    holder.expandableTextContent.setText(introductionText);
+                    
+                } else if (position == 2) {
+                    // Scientific Name - text only
+                    holder.expandableSection.setVisibility(View.GONE);
+                    holder.expandableTextSection.setVisibility(View.VISIBLE);
+                    holder.expandableTextTitle.setText("Scientific Name:");
+                    
+                    if (scientificNameText.isEmpty()) {
+                        loadScientificNameFromDatabase();
+                    }
+                    holder.expandableTextContent.setText(scientificNameText);
+                    
+                } else if (position == 3) {
+                    // Crop Duration - text only
+                    holder.expandableSection.setVisibility(View.GONE);
+                    holder.expandableTextSection.setVisibility(View.VISIBLE);
+                    holder.expandableTextTitle.setText("Duration:");
+                    
+                    if (durationText.isEmpty()) {
+                        loadDurationFromDatabase();
+                    }
+                    holder.expandableTextContent.setText(durationText);
+                    
+                } else if (position == 5) {
                     // Planting Season - text only
                     holder.expandableSection.setVisibility(View.GONE);
                     holder.expandableTextSection.setVisibility(View.VISIBLE);
@@ -103,6 +144,28 @@ public class Adapter_CropOptions extends BaseAdapter {
                         loadSeasonFromDatabase();
                     }
                     holder.expandableTextContent.setText(seasonText);
+                    
+                } else if (position == 8) {
+                    // Irrigation - text only
+                    holder.expandableSection.setVisibility(View.GONE);
+                    holder.expandableTextSection.setVisibility(View.VISIBLE);
+                    holder.expandableTextTitle.setText("Irrigation:");
+                    
+                    if (irrigationText.isEmpty()) {
+                        loadIrrigationFromDatabase();
+                    }
+                    holder.expandableTextContent.setText(irrigationText);
+                    
+                } else if (position == 9) {
+                    // Harvesting - text only
+                    holder.expandableSection.setVisibility(View.GONE);
+                    holder.expandableTextSection.setVisibility(View.VISIBLE);
+                    holder.expandableTextTitle.setText("Harvesting:");
+                    
+                    if (harvestingText.isEmpty()) {
+                        loadHarvestingFromDatabase();
+                    }
+                    holder.expandableTextContent.setText(harvestingText);
                     
                 } else {
                     // Varieties, Materials, Weed Control - lists
@@ -142,6 +205,8 @@ public class Adapter_CropOptions extends BaseAdapter {
                 holder.expandableTextSection.setVisibility(View.GONE);
             }
         } else {
+            // For navigation items, don't set any click listener
+            // Let the ListView's onItemClickListener handle navigation
             holder.expandableSection.setVisibility(View.GONE);
             holder.expandableTextSection.setVisibility(View.GONE);
         }
@@ -151,8 +216,8 @@ public class Adapter_CropOptions extends BaseAdapter {
     
     
     public void toggleExpansion(int position) {
-        // Check if this is an expandable item (4, 5, 6, or 7)
-        if (position == 4 || position == 5 || position == 6 || position == 7) {
+        // Check if this is an expandable item (1, 2, 3, 4, 5, 6, 7, 8, 9)
+        if (position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7 || position == 8 || position == 9) {
             if (expandedPosition == position) {
                 expandedPosition = -1; // Collapse
             } else {
@@ -163,7 +228,7 @@ public class Adapter_CropOptions extends BaseAdapter {
     }
     
     public boolean isExpandableItem(int position) {
-        return position == 4 || position == 5 || position == 6 || position == 7;
+        return position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7 || position == 8 || position == 9;
     }
     
     private void loadVarietiesFromDatabase() {
@@ -240,6 +305,71 @@ public class Adapter_CropOptions extends BaseAdapter {
         }
         if (weedsList.isEmpty()) {
             weedsList.add(new Class_Weeds(0, "No weed control data available"));
+        }
+    }
+    
+    private void loadIntroductionFromDatabase() {
+        try {
+            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+            introductionText = db.getCropFieldById(cropId, "description");
+        } catch (Exception e) {
+            android.util.Log.e("Adapter_CropOptions", "Error loading introduction: " + e.getMessage());
+            introductionText = "";
+        }
+        if (introductionText == null || introductionText.trim().isEmpty()) {
+            introductionText = "No introduction available";
+        }
+    }
+    
+    private void loadScientificNameFromDatabase() {
+        try {
+            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+            scientificNameText = db.getCropFieldById(cropId, "science_name");
+        } catch (Exception e) {
+            android.util.Log.e("Adapter_CropOptions", "Error loading scientific name: " + e.getMessage());
+            scientificNameText = "";
+        }
+        if (scientificNameText == null || scientificNameText.trim().isEmpty()) {
+            scientificNameText = "No scientific name available";
+        }
+    }
+    
+    private void loadIrrigationFromDatabase() {
+        try {
+            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+            irrigationText = db.getCropFieldById(cropId, "irrigation");
+        } catch (Exception e) {
+            android.util.Log.e("Adapter_CropOptions", "Error loading irrigation: " + e.getMessage());
+            irrigationText = "";
+        }
+        if (irrigationText == null || irrigationText.trim().isEmpty()) {
+            irrigationText = "No irrigation data available";
+        }
+    }
+    
+    private void loadDurationFromDatabase() {
+        try {
+            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+            durationText = db.getCropFieldById(cropId, "duration");
+        } catch (Exception e) {
+            android.util.Log.e("Adapter_CropOptions", "Error loading duration: " + e.getMessage());
+            durationText = "";
+        }
+        if (durationText == null || durationText.trim().isEmpty()) {
+            durationText = "No duration data available";
+        }
+    }
+    
+    private void loadHarvestingFromDatabase() {
+        try {
+            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+            harvestingText = db.getCropFieldById(cropId, "harvesting");
+        } catch (Exception e) {
+            android.util.Log.e("Adapter_CropOptions", "Error loading harvesting: " + e.getMessage());
+            harvestingText = "";
+        }
+        if (harvestingText == null || harvestingText.trim().isEmpty()) {
+            harvestingText = "No harvesting data available";
         }
     }
     
