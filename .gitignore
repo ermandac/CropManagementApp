@@ -1,9 +1,82 @@
+# Build outputs
+*.apk
+*.ap_
+*.dex
+*.class
+*.jar
+*.so
+*.aar
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+
+# IDE
+.idea/
+.vscode/
 *.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+*.iws
+*.ipr
+*.swp
+*.swo
+*~
 .DS_Store
-/build
-/captures
-.externalNativeBuild
+
+# Firebase & API Keys (SENSITIVE)
+app/google-services.json
+google-services.json
+*.properties
+local.properties
+gradle.properties
+
+# Environment variables
+.env
+.env.local
+*.env
+
+# Sensitive data files
+Ipaddress.java
+**/Ipaddress.java
+app/src/main/java/com/cma/thesis/cropmanagementapp/Ipaddress.java
+
+# Database files
+*.db
+*.sqlite
+*.sqlite-journal
+cms.sqlite
+cms.sqlite-journal
+
+# Migration & temporary files
+*.pyc
+__pycache__/
+*.log
+firestore_migration.json
+firestore_upload.py
+migrate_to_firestore.py
+extract_schema.py
+
+# Private keys and certificates
+*.keystore
+*.jks
+*.pem
+*.key
+*.cert
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Gradle
+.gradle
+gradlew
+gradlew.bat
+gradle/
+
+# Build generated files
+.build/
+out/
