@@ -99,6 +99,10 @@ public class Adapter_CropOptions extends BaseAdapter {
                 }
             });
             
+            // Make the item focusable and clickable to prevent ListView click events
+            holder.txtItem.setClickable(true);
+            holder.txtItem.setFocusable(true);
+            
             if (expandedPosition == position) {
                 // Handle different types of expandable content
                 if (position == 1) {
@@ -205,10 +209,15 @@ public class Adapter_CropOptions extends BaseAdapter {
                 holder.expandableTextSection.setVisibility(View.GONE);
             }
         } else {
-            // For navigation items, don't set any click listener
+            // For navigation items (Planner at 0, Comment at 10), don't set any click listener
             // Let the ListView's onItemClickListener handle navigation
             holder.expandableSection.setVisibility(View.GONE);
             holder.expandableTextSection.setVisibility(View.GONE);
+            
+            // Make sure navigation items don't have click listeners that interfere
+            holder.txtItem.setOnClickListener(null);
+            holder.txtItem.setClickable(false);
+            holder.txtItem.setFocusable(false);
         }
         
         return convertView;

@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.Timestamp;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-
+import java.util.Locale;
 
 public class AdapterPlanner extends BaseAdapter
 {
@@ -60,9 +62,21 @@ public class AdapterPlanner extends BaseAdapter
 
         Class_Planner plan = plannerList.get(position);
 
-        vh.txtPlan.setText(plan.getStartdate());
+        // Format the date range: "Start Date - End Date"
+        String dateRange = formatDateRange(plan.getStartDate(), plan.getEndDate());
+        vh.txtPlan.setText(dateRange);
 
         return row;
+    }
+
+    private String formatDateRange(String startDate, String endDate) {
+        if (startDate != null && endDate != null && !startDate.isEmpty() && !endDate.isEmpty()) {
+            return startDate + " - " + endDate;
+        } else if (startDate != null && !startDate.isEmpty()) {
+            return startDate;
+        } else {
+            return "No date";
+        }
     }
 
     private class viewHolder

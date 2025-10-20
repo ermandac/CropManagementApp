@@ -115,6 +115,41 @@ public class FirestoreCropHelper {
     }
 
     /**
+     * Get a single crop by ID
+     */
+    public void getCropById(String cropId, CropCallback callback) {
+        db.collection("crops")
+                .whereEqualTo("id", Long.parseLong(cropId))
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                        DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        Class_Crops crop = documentToCrop(doc);
+                        if (crop != null) {
+                            callback.onSuccess(crop);
+                        } else {
+                            callback.onError("Failed to parse crop data");
+                        }
+                    } else {
+                        callback.onError("Crop not found");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error getting crop: " + e.getMessage());
+                    callback.onError("Error: " + e.getMessage());
+                });
+    }
+
+    /**
+     * Callback interface for single crop operations
+     */
+    public interface CropCallback {
+        void onSuccess(Class_Crops crop);
+        void onError(String error);
+    }
+
+    /**
      * Callback interface for crop loading operations
      */
     public interface CropLoadCallback {

@@ -17,6 +17,47 @@
         android:textSize="16sp"
         android:padding="12dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Planting Method"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:padding="8dp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupPlantingMethod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
+
+        <RadioButton
+            android:id="@+id/radioSabongTanim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sabong Tanim (Direct Seeding)"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioLipatTanim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lipat Tanim (Transplanting)" />
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/checkboxNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Notifications"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:checked="true" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
