@@ -440,8 +440,7 @@
                                 android:layout_width="64dp"
                                 android:layout_height="64dp"
                                 android:src="@drawable/ic_organic"
-                                android:tint="@color/modern_organic"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -500,8 +499,7 @@
                                 android:layout_width="64dp"
                                 android:layout_height="64dp"
                                 android:src="@drawable/ic_pest"
-                                android:tint="@color/modern_pest"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
