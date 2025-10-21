@@ -39,4 +39,11 @@
             android:title="Fertilizers" />
     </group>
 
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_admin_panel"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Admin Panel" />
+    </group>
+
 </menu>

@@ -138,6 +138,10 @@ public class Activity_Home extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), activity_fetilizer.class);
             startActivity(intent);
         }
+        else if (id == R.id.nav_admin_panel) {
+            Intent intent = new Intent(getApplicationContext(), Activity_AdminLogin.class);
+            startActivity(intent);
+        }
         return true;
     }
 

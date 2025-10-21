@@ -135,6 +135,30 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity_fetilizer"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity_AdminLogin"
+            android:label="Admin Login"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_Home" />
+        <activity
+            android:name=".Activity_AdminDashboard"
+            android:label="Admin Dashboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminLogin" />
+        <activity
+            android:name=".Activity_AdminCropList"
+            android:label="Manage Crops"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminDashboard" />
+        <activity
+            android:name=".Activity_AdminCropForm"
+            android:label="Crop Form"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminCropList" />
 
         <receiver
             android:name=".AlarmReciever"
