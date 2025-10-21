@@ -59,8 +59,8 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/home_fruits"
-                                android:scaleType="centerCrop"/>
+                                android:src="@drawable/ic_category_fruits"
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -119,8 +119,8 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/home_medecinal"
-                                android:scaleType="centerCrop"/>
+                                android:src="@drawable/ic_category_medicinal"
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -188,8 +188,8 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/home_plantation"
-                                android:scaleType="centerCrop"/>
+                                android:src="@drawable/ic_category_plantation"
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -248,8 +248,8 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/home_pulses"
-                                android:scaleType="centerCrop"/>
+                                android:src="@drawable/ic_category_pulses"
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -317,8 +317,8 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/home_spices"
-                                android:scaleType="centerCrop"/>
+                                android:src="@drawable/ic_category_spices"
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -377,8 +377,8 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/home_vegestables"
-                                android:scaleType="centerCrop"/>
+                                android:src="@drawable/ic_category_vegetables"
+                                android:scaleType="centerInside"/>
                         </LinearLayout>
                         
                         <LinearLayout
@@ -444,9 +444,9 @@
                             android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/ic_organic"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_category_organic"
                                 android:scaleType="centerInside"/>
                         </LinearLayout>
                         
@@ -504,9 +504,9 @@
                             android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/ic_pest"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_category_pest"
                                 android:scaleType="centerInside"/>
                         </LinearLayout>
                         
