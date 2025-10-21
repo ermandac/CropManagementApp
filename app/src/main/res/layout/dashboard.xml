@@ -34,7 +34,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
                     android:onClick="onClickFruits"
@@ -51,14 +51,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_fruits_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@drawable/home_fruits"
                                 android:scaleType="centerCrop"/>
                         </LinearLayout>
@@ -94,7 +94,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId1"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
                     android:onClick="onClickMedicinal"
@@ -111,14 +111,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_medicinal_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@drawable/home_medecinal"
                                 android:scaleType="centerCrop"/>
                         </LinearLayout>
@@ -163,7 +163,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId2"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
                     android:onClick="onClickPlantation"
@@ -180,14 +180,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_plantation_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@drawable/home_plantation"
                                 android:scaleType="centerCrop"/>
                         </LinearLayout>
@@ -223,7 +223,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId3"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
                     android:onClick="onClickPulses"
@@ -240,14 +240,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_pulses_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@drawable/home_pulses"
                                 android:scaleType="centerCrop"/>
                         </LinearLayout>
@@ -292,7 +292,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId5"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
                     android:onClick="onClickSpices"
@@ -309,14 +309,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_spices_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@drawable/home_spices"
                                 android:scaleType="centerCrop"/>
                         </LinearLayout>
@@ -352,7 +352,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId4"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
                     android:onClick="onClickVeges"
@@ -369,14 +369,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_vegetables_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:src="@drawable/home_vegestables"
                                 android:scaleType="centerCrop"/>
                         </LinearLayout>
@@ -421,7 +421,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId6"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
                     android:onClick="onClickOrganic"
@@ -438,14 +438,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_organic_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:src="@drawable/ic_organic"
                                 android:scaleType="centerInside"/>
                         </LinearLayout>
@@ -481,7 +481,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/bankcardId7"
                     android:layout_width="0dp"
-                    android:layout_height="180dp"
+                    android:layout_height="140dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
                     android:onClick="onClickPest"
@@ -498,14 +498,14 @@
                         
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="90dp"
                             android:background="@color/modern_pest_light"
                             android:gravity="center"
-                            android:padding="16dp">
+                            android:padding="12dp">
                             
                             <ImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:src="@drawable/ic_pest"
                                 android:scaleType="centerInside"/>
                         </LinearLayout>
