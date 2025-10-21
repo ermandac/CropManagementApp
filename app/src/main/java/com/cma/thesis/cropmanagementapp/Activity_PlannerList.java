@@ -1,9 +1,12 @@
 package com.cma.thesis.cropmanagementapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -31,6 +34,7 @@ public class Activity_PlannerList extends AppCompatActivity
     AdapterPlanner plannerlistadapter;
     public static Class_Functions function;
     String cropid = "";
+    LocalPlannerHelper localPlannerHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,11 +43,27 @@ public class Activity_PlannerList extends AppCompatActivity
 
         lv =(ListView) findViewById(R.id.cropGridViewPlanners);
         plannerList = new ArrayList<>();
-        plannerlistadapter = new AdapterPlanner(this,R.layout.activity_plan_item,plannerList);
+        plannerlistadapter = new AdapterPlanner(this, R.layout.activity_plan_item, plannerList, 
+            new AdapterPlanner.OnDeleteClickListener() {
+                @Override
+                public void onDeleteClick(Class_Planner plan, int position) {
+                    showDeleteConfirmation(plan, position);
+                }
+            },
+            new AdapterPlanner.OnEditClickListener() {
+                @Override
+                public void onEditClick(Class_Planner plan, int position) {
+                    Toast.makeText(Activity_PlannerList.this, "Edit: " + plan.getStartDate(), Toast.LENGTH_SHORT).show();
+                    // TODO: Implement edit functionality
+                }
+            });
 
         lv.setAdapter(plannerlistadapter);
 
         cropid = getIntent().getStringExtra("passedID");
+
+        // Initialize local planner helper
+        localPlannerHelper = new LocalPlannerHelper(this);
 
         loadPlans(cropid);
 
@@ -67,43 +87,68 @@ public class Activity_PlannerList extends AppCompatActivity
 
     private void loadPlans(String cropid) {
         plannerList.clear();
-        Ipaddress address = new Ipaddress();
+        
+        localPlannerHelper.loadPlansByCropId(cropid, new LocalPlannerHelper.PlanLoadCallback() {
+            @Override
+            public void onSuccess(ArrayList<Class_Planner> plans) {
+                plannerList.clear();
+                plannerList.addAll(plans);
+                plannerlistadapter.notifyDataSetChanged();
+                Log.d("PlannerList", "Loaded " + plans.size() + " plans");
+            }
 
-        String pestLink = address.ipaddress +"model/plannerlist_api.php?id="+cropid;
+            @Override
+            public void onError(String error) {
+                Log.e("PlannerList", "Error loading plans: " + error);
+                Toast.makeText(Activity_PlannerList.this, 
+                    "Failed to load plans", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, pestLink,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+    private void showDeleteConfirmation(final Class_Planner plan, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Plan");
+        builder.setMessage("Are you sure you want to delete this plan?\n\n" + 
+                          plan.getStartDate() + " - " + plan.getEndDate());
+        
+        builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deletePlan(plan, position);
+            }
+        });
+        
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        
+        builder.show();
+    }
 
-                        try {
-                            //converting the string to json array object
-                            JSONArray array = new JSONArray(response);
+    private void deletePlan(final Class_Planner plan, final int position) {
+        localPlannerHelper.deletePlan(plan.getId(), new LocalPlannerHelper.PlanCallback() {
+            @Override
+            public void onSuccess(String message) {
+                Toast.makeText(Activity_PlannerList.this, 
+                    "Plan deleted successfully", Toast.LENGTH_SHORT).show();
+                
+                // Remove from list and update adapter
+                plannerList.remove(position);
+                plannerlistadapter.notifyDataSetChanged();
+                
+                Log.d("PlannerList", "Plan deleted: " + plan.getId());
+            }
 
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
-                                //getting product object from json array
-                                JSONObject plan = array.getJSONObject(i);
-
-                                int id = plan.getInt("id");
-                                String cropid = plan.getString("crop_id");
-                                String startdate = plan.getString("start_date");
-
-                                plannerList.add(new Class_Planner(id,cropid,startdate));
-                            }
-                            plannerlistadapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(Activity_PlannerList.this, "error" + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        //adding our stringrequest to queue
-        Volley.newRequestQueue(this).add(stringRequest);
+            @Override
+            public void onError(String error) {
+                Log.e("PlannerList", "Error deleting plan: " + error);
+                Toast.makeText(Activity_PlannerList.this, 
+                    "Failed to delete plan: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

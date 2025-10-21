@@ -1,40 +1,75 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relative"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="35dp"
-    android:orientation="horizontal" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etcomment"
-        android:layout_width="283dp"
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="9dp"
-        android:hint="Enter Comment"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:maxLines="10"
-        android:minLines="3"
-        android:scrollbars="vertical"
-        android:text=""
+        android:text="Notes"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:textColor="#404040"
-        android:textSize="20sp" />
+        android:padding="8dp"
+        android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnsavecomment"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="15dp"
-        android:text="Save" />
-
-
+    <!-- Comments List (Thread) -->
     <ListView
-        android:layout_below="@id/etcomment"
         android:id="@+id/listview_Comment"
-        android:layout_width="377dp"
-        android:layout_height="556dp" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:layout_marginBottom="16dp" />
 
-</RelativeLayout>
+    <!-- Add Comment Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:padding="12dp"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add a Note"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#404040"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etcomment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type your note here..."
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:maxLines="6"
+            android:minLines="2"
+            android:scrollbars="vertical"
+            android:textColor="#404040"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="#F5F5F5" />
+
+        <Button
+            android:id="@+id/btnsavecomment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:text="Save Note"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

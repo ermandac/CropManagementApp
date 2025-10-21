@@ -54,6 +54,15 @@ dependencies {
     // WorkManager for background task scheduling
     implementation 'androidx.work:work-runtime:2.8.1'
 
+    // Room Database for local storage
+    def room_version = "2.6.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // Optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // Optional - Guava support for Room (for ListenableFuture)
+    implementation "androidx.room:room-guava:$room_version"
+
     // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

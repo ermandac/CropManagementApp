@@ -145,56 +145,37 @@ public class Activity_Home extends AppCompatActivity
 
     public void onClickFruits(View v)
     {
-//        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
-//        intent.putExtra("category","1");
-//        startActivity(intent);
-
-        Intent intent = new Intent(getApplicationContext(),sub_category.class);
+        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
         intent.putExtra("category","1");
         startActivity(intent);
     }
     public void onClickMedicinal(View v)
     {
-//        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
-//        intent.putExtra("category","2");
-//        startActivity(intent);
-        Intent intent = new Intent(getApplicationContext(),sub_category.class);
+        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
         intent.putExtra("category","6");
         startActivity(intent);
     }
     public void onClickPlantation(View v)
     {
-//        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
-//        intent.putExtra("category","3");
-//        startActivity(intent);
-        Intent intent = new Intent(getApplicationContext(),sub_category.class);
+        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
         intent.putExtra("category","5");
         startActivity(intent);
     }
     public void onClickPulses(View v)
     {
-//        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
-//        intent.putExtra("category","4");
-//        startActivity(intent);
-        Intent intent = new Intent(getApplicationContext(),sub_category.class);
+        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
         intent.putExtra("category","3");
         startActivity(intent);
     }
     public void onClickSpices(View v)
     {
-//        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
-//        intent.putExtra("category","5");
-//        startActivity(intent);
-        Intent intent = new Intent(getApplicationContext(),sub_category.class);
+        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
         intent.putExtra("category","4");
         startActivity(intent);
     }
     public void onClickVeges(View v)
     {
-//        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
-//        intent.putExtra("category","6");
-//        startActivity(intent);
-        Intent intent = new Intent(getApplicationContext(),sub_category.class);
+        Intent intent = new Intent(getApplicationContext(),Activity_CropList.class);
         intent.putExtra("category","2");
         startActivity(intent);
     }

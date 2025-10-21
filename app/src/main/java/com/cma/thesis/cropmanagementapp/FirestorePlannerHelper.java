@@ -162,6 +162,55 @@ public class FirestorePlannerHelper {
     }
 
     /**
+     * Update only the dates of a plan
+     */
+    public void updatePlanDates(String planId, String startDate, String endDate, PlanCallback callback) {
+        try {
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("startDate", startDate);
+            updates.put("endDate", endDate);
+
+            db.collection(COLLECTION_PLANS).document(planId)
+                    .update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "Plan dates updated successfully: " + planId);
+                        callback.onSuccess("Plan dates updated successfully");
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error updating plan dates: " + e.getMessage());
+                        callback.onError("Error: " + e.getMessage());
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in updatePlanDates: " + e.getMessage());
+            callback.onError("Exception: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Update only the planting method of a plan
+     */
+    public void updatePlantingMethod(String planId, String plantingMethod, PlanCallback callback) {
+        try {
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("plantingMethod", plantingMethod);
+
+            db.collection(COLLECTION_PLANS).document(planId)
+                    .update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "Planting method updated successfully: " + planId);
+                        callback.onSuccess("Planting method updated successfully");
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error updating planting method: " + e.getMessage());
+                        callback.onError("Error: " + e.getMessage());
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in updatePlantingMethod: " + e.getMessage());
+            callback.onError("Exception: " + e.getMessage());
+        }
+    }
+
+    /**
      * Delete a plan
      */
     public void deletePlan(String planId, PlanCallback callback) {

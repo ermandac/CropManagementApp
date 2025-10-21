@@ -1,9 +1,12 @@
 package com.cma.thesis.cropmanagementapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -33,16 +36,13 @@ public class Activity_Comments extends AppCompatActivity {
 
     EditText commentText;
     Button saveComment;
-    Ipaddress address = new Ipaddress();
-
-    String insertLink = address.ipaddress + "model/insert_comment.php";
 
     Class_Comment commentclass;
 
     ListView listView;
     Adapter_Comment adapter_comment;
     String cropid = "";
-
+    LocalCommentHelper localCommentHelper;
 
     public static ArrayList<Class_Comment> commentArrayList = new ArrayList<>();
 
@@ -52,90 +52,54 @@ public class Activity_Comments extends AppCompatActivity {
         setContentView(R.layout.activity__comments);
 
         listView  = findViewById(R.id.listview_Comment);
-        adapter_comment = new Adapter_Comment(this,commentArrayList);
+        adapter_comment = new Adapter_Comment(this, commentArrayList, 
+            new Adapter_Comment.OnDeleteClickListener() {
+                @Override
+                public void onDeleteClick(Class_Comment comment, int position) {
+                    showDeleteConfirmation(comment, position);
+                }
+            });
         listView.setAdapter(adapter_comment);
         saveComment = (Button)findViewById(R.id.btnsavecomment);
         cropid = getIntent().getStringExtra("passedID");
+        
+        // Initialize local comment helper
+        localCommentHelper = new LocalCommentHelper(this);
+        
         RetrieveComment(cropid);
 
         saveComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InsertComment();
-                RetrieveComment(cropid);
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String ID = String.valueOf(commentArrayList.get(i).getId());
-                String CROPID = String.valueOf(commentArrayList.get(i).getCropId());
-                String COMMENT = String.valueOf(commentArrayList.get(i).getComment());
-                String DATE = String.valueOf(commentArrayList.get(i).getCommentDate());
-
-                Intent intent = new Intent(getApplicationContext(),Activity_Reply.class);
-                Bundle extras = new Bundle();
-                extras.putString("EXTRA_ID",ID);
-                extras.putString("EXTRA_CROPID",CROPID);
-                extras.putString("EXTRA_COMMENT",COMMENT);
-                extras.putString("EXTRA_DATE",DATE);
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
+        // Comment click listener removed - comments are local-only personal notes
+        // No need for reply functionality in local storage mode
     }
 
 
     void RetrieveComment(String id)
     {
-        Toast.makeText(Activity_Comments.this,id, Toast.LENGTH_SHORT).show();
-        String url = address.ipaddress + "model/commentApi.php?id="+id;
-
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        commentArrayList.clear();
+        
+        localCommentHelper.loadCommentsByCropId(id, new LocalCommentHelper.CommentLoadCallback() {
             @Override
-            public void onResponse(String response) {
-
-                    commentArrayList.clear();
-                    try{
-                        JSONObject jsonObject = new JSONObject(response);
-                        String success = jsonObject.getString("success");
-
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                        if(success.equals("1"))
-                        {
-                            for (int i=0;i<jsonArray.length();i++)
-                            {
-                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                String id = object.getString("id");
-                                String cropID = object.getString("cropID");
-                                String comment = object.getString("comment");
-                                String dateComment = object.getString("date_comment");
-
-
-                                commentclass = new Class_Comment(Integer.parseInt(id),cropID,comment,dateComment);
-                                commentArrayList.add(commentclass);
-                                adapter_comment.notifyDataSetChanged();
-
-                            }
-                        }
-
-                    } catch (JSONException e) {
-                        Toast.makeText(Activity_Comments.this,e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                    }
+            public void onSuccess(ArrayList<Class_Comment> comments) {
+                commentArrayList.clear();
+                commentArrayList.addAll(comments);
+                adapter_comment.notifyDataSetChanged();
+                Log.d("Comments", "Loaded " + comments.size() + " comments");
             }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Activity_Comments.this,error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
 
-        RequestQueue queue = Volley.newRequestQueue((getApplicationContext()));
-        queue.add(request);
+            @Override
+            public void onError(String error) {
+                Log.e("Comments", "Error loading comments: " + error);
+                Toast.makeText(Activity_Comments.this, 
+                    "Failed to load comments", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     void InsertComment()
@@ -145,40 +109,74 @@ public class Activity_Comments extends AppCompatActivity {
         final String commentValue = commentText.getText().toString().trim();
         final String dateValue = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
+        if (commentValue.isEmpty()) {
+            Toast.makeText(this, "Please enter a comment", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        StringRequest request = new StringRequest(Request.Method.POST, insertLink, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                commentText.setText("");
-                Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError
-            {
-                Map<String,String> param = new HashMap<String,String>();
-//                $crop_id = $_POST['cropid'];
-//                $comment = $_POST['comment'];
-//                $date = $_POST['date'];
-                param.put("cropid",cropIDValue);
-                param.put("comment",commentValue);
-                param.put("date",dateValue);
-                return param;
-            }
-        };
+        localCommentHelper.createComment(cropIDValue, commentValue, dateValue, 
+            new LocalCommentHelper.CommentCallback() {
+                @Override
+                public void onSuccess(String message) {
+                    commentText.setText("");
+                    Toast.makeText(Activity_Comments.this, 
+                        "Comment added successfully", Toast.LENGTH_SHORT).show();
+                    
+                    // Reload comments
+                    RetrieveComment(cropIDValue);
+                }
 
-        RequestQueue queue = Volley.newRequestQueue((getApplicationContext()));
-        queue.add(request);
+                @Override
+                public void onError(String error) {
+                    Log.e("Comments", "Error creating comment: " + error);
+                    Toast.makeText(Activity_Comments.this, 
+                        "Failed to add comment: " + error, Toast.LENGTH_LONG).show();
+                }
+            });
+    }
 
-        Intent intent= new Intent(this, Activity_Comments.class);
-        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-        adapter_comment.notifyDataSetChanged();
-        listView.setAdapter(adapter_comment);
+    private void showDeleteConfirmation(final Class_Comment comment, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Note");
+        builder.setMessage("Are you sure you want to delete this note?\n\n" + comment.getComment());
+        
+        builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteComment(comment, position);
+            }
+        });
+        
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        
+        builder.show();
+    }
+
+    private void deleteComment(final Class_Comment comment, final int position) {
+        localCommentHelper.deleteComment(comment.getId(), new LocalCommentHelper.CommentCallback() {
+            @Override
+            public void onSuccess(String message) {
+                Toast.makeText(Activity_Comments.this, 
+                    "Note deleted successfully", Toast.LENGTH_SHORT).show();
+                
+                // Remove from list and update adapter
+                commentArrayList.remove(position);
+                adapter_comment.notifyDataSetChanged();
+                
+                Log.d("Comments", "Comment deleted: " + comment.getId());
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("Comments", "Error deleting comment: " + error);
+                Toast.makeText(Activity_Comments.this, 
+                    "Failed to delete note: " + error, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

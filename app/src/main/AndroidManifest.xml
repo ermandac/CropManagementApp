@@ -97,9 +97,6 @@
             android:name=".Activity_Crop_PlanDetails"
             android:label="All Plans" />
         <activity
-            android:name=".sub_category"
-            android:label="Select Sub-category" />
-        <activity
             android:name=".activity_topcrop"
             android:label="Suggested Crops" />
         <activity android:name=".activity_fetilizer" />
