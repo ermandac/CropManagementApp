@@ -33,4 +33,27 @@
     <color name="darkpurple">#a569bd</color>
     <color name="pinky">#fe104d</color>
     <color name="lightgray">#808080</color>
+
+    <!-- Modern Color Palette for Home Screen -->
+    <color name="modern_fruits">#FF6B6B</color>
+    <color name="modern_fruits_light">#FFE5E5</color>
+    <color name="modern_medicinal">#4ECDC4</color>
+    <color name="modern_medicinal_light">#E8F9F8</color>
+    <color name="modern_plantation">#95E1D3</color>
+    <color name="modern_plantation_light">#E8F9F5</color>
+    <color name="modern_pulses">#F38181</color>
+    <color name="modern_pulses_light">#FEEAEA</color>
+    <color name="modern_spices">#AA96DA</color>
+    <color name="modern_spices_light">#F3EFFF</color>
+    <color name="modern_vegetables">#FCBAD3</color>
+    <color name="modern_vegetables_light">#FFF0F6</color>
+    <color name="modern_organic">#A8E6CF</color>
+    <color name="modern_organic_light">#E8F9F3</color>
+    <color name="modern_pest">#FFD3B6</color>
+    <color name="modern_pest_light">#FFF5ED</color>
+    
+    <color name="card_background">#FFFFFF</color>
+    <color name="text_primary">#2C3E50</color>
+    <color name="text_secondary">#7F8C8D</color>
+    <color name="home_background">#F8F9FA</color>
 </resources>
