@@ -29,7 +29,13 @@ public class ImageHelper {
     private final FirebaseStorage storage;
     
     public ImageHelper() {
-        storage = FirebaseStorage.getInstance();
+        // Initialize Firebase Storage with explicit bucket URL
+        try {
+            storage = FirebaseStorage.getInstance("gs://cropmanagementapp-ba8af.firebasestorage.app");
+        } catch (Exception e) {
+            Log.e(TAG, "Error initializing Firebase Storage with bucket URL, using default: " + e.getMessage());
+            throw new RuntimeException("Failed to initialize Firebase Storage. Please check Firebase configuration.", e);
+        }
     }
     
     /**

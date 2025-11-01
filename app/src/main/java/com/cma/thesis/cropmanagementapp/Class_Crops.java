@@ -9,14 +9,14 @@ public class Class_Crops
     int category_id;
     String cropname;
     String desc;
-    String science_name;
+    String scienceName;
     String duration;
     String varieties;
     String soil_climate;
     String season;
     String materials ;
     String main_field ;
-    String weed_contro;
+    String weedControl;
     String irrigation;
     String growth_management;
     String harvesting;
@@ -24,21 +24,21 @@ public class Class_Crops
 
 
 
-    public Class_Crops(int id, int category_id, String cropname, String desc, String science_name, String duration, String varieties, String soil_climate,
-                       String season, String main_field, String irrigation, String growth_management, String harvesting,String image) {
+    public Class_Crops(int id, int category_id, String cropname, String desc, String scienceName, String duration, String varieties, String soil_climate,
+                       String season, String main_field, String irrigation, String growth_management, String harvesting,String image, String weedControl, String materials) {
 
         this.id = id;
         this.category_id = category_id;
         this.cropname = cropname;
         this.desc = desc;
-        this.science_name = science_name;
+        this.scienceName = scienceName;
         this.duration = duration;
         this.varieties = varieties;
         this.soil_climate = soil_climate;
         this.season = season;
         this.materials = materials;
         this.main_field = main_field;
-        this.weed_contro = weed_contro;
+        this.weedControl = weedControl;
         this.irrigation = irrigation;
         this.growth_management = growth_management;
         this.harvesting = harvesting;
@@ -85,12 +85,12 @@ public class Class_Crops
         this.desc = desc;
     }
 
-    public String getScience_name() {
-        return science_name;
+    public String getscienceName() {
+        return scienceName;
     }
 
-    public void setScience_name(String science_name) {
-        this.science_name = science_name;
+    public void setscienceName(String scienceName) {
+        this.scienceName = scienceName;
     }
 
     public String getDuration() {
@@ -141,12 +141,12 @@ public class Class_Crops
         this.main_field = main_field;
     }
 
-    public String getWeed_contro() {
-        return weed_contro;
+    public String getweedControl() {
+        return weedControl;
     }
 
-    public void setWeed_contro(String weed_contro) {
-        this.weed_contro = weed_contro;
+    public void setweedControl(String weed_contro) {
+        this.weedControl = weed_contro;
     }
 
     public String getIrrigation() {

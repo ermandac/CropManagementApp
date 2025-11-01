@@ -18,7 +18,7 @@ public class Activity_ScientificName extends AppCompatActivity {
         science_name = (TextView) findViewById(R.id.txtsciencename);
         String cropID = getIntent().getStringExtra("passedID");
 
-        String local = api.getCropFieldById(cropID, "science_name");
+        String local = api.getCropFieldById(cropID, "scienceName");
         science_name.setText(local == null ? "No data available" : local);
     }
 }

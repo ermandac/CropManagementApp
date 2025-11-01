@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cma.thesis.cropmanagementapp">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Storage permissions for image uploads -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
@@ -136,6 +140,27 @@
         <activity android:name=".activity_fetilizer"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Activity_SuggestedCrops"
+            android:label="Suggested Crops"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activity_Home" />
+        <activity
+            android:name=".Activity_Pest"
+            android:label="Pest Management"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activity_Home" />
+
+        <activity
+            android:name=".Activity_OrganicFarming"
+            android:label="Organic Farming"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activity_Home" />
+        <activity
+            android:name=".Activity_FAQ"
+            android:label="Help &amp; FAQ"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activity_Home" />
+        <activity
             android:name=".Activity_AdminLogin"
             android:label="Admin Login"
             android:screenOrientation="portrait"
@@ -159,10 +184,64 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:parentActivityName=".Activity_AdminCropList" />
+        <activity
+            android:name=".Activity_AdminPestList"
+            android:label="Manage Pests"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminDashboard" />
+        <activity
+            android:name=".Activity_AdminPestForm"
+            android:label="Pest Form"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminPestList" />
+        <activity
+            android:name=".Activity_AdminOrganicList"
+            android:label="Manage Organic Farming"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminDashboard" />
+        <activity
+            android:name=".Activity_AdminOrganicForm"
+            android:label="Organic Form"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminOrganicList" />
+        <activity
+            android:name=".Activity_AdminFertilizerList"
+            android:label="Manage Fertilizers"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminDashboard" />
+        <activity
+            android:name=".Activity_AdminFertilizerForm"
+            android:label="Fertilizer Form"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminFertilizerList" />
+        <activity
+            android:name=".Activity_AdminSuggestedCropList"
+            android:label="Manage Suggested Crops"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminDashboard" />
+        <activity
+            android:name=".Activity_AdminSuggestedCropForm"
+            android:label="Suggested Crop Form"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:parentActivityName=".Activity_AdminSuggestedCropList" />
 
         <receiver
             android:name=".AlarmReciever"
             android:exported="false" />
+
+        <!-- Planner Notification Receiver -->
+        <receiver
+            android:name=".PlannerNotificationManager$NotificationBroadcastReceiver"
+            android:exported="false"
+            android:enabled="true" />
 
         <service
             android:name=".ServiceAlarm"

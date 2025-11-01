@@ -56,4 +56,5 @@
     <color name="text_primary">#2C3E50</color>
     <color name="text_secondary">#7F8C8D</color>
     <color name="home_background">#F8F9FA</color>
+    <color name="colorPrimaryLight">#E8F5E9</color>
 </resources>

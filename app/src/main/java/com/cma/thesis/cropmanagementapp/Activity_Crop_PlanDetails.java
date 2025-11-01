@@ -190,20 +190,27 @@ public class Activity_Crop_PlanDetails extends AppCompatActivity {
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
-    public void createNotification()
-    {
-        AlarmManager alarms = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+//    public void createNotification() {
+//        AlarmManager alarms = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//
+//        Receiver receiver = new Receiver();
+//        IntentFilter filter = new IntentFilter("ALARM_ACTION");
+//        registerReceiver(receiver, filter);
+//
+//        Intent intent = new Intent("ALARM_ACTION");
+//        intent.putExtra("param", "My scheduled action");
+//
+//        // ✅ Add mutability flag for Android 12+
+//        int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+//                ? PendingIntent.FLAG_IMMUTABLE
+//                : 0;
+//
+//        PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, flags);
+//
+//        // 3 seconds after app launch
+//        alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, operation);
+//    }
 
-        Receiver receiver = new Receiver();
-        IntentFilter filter = new IntentFilter("ALARM_ACTION");
-        registerReceiver(receiver, filter);
-
-        Intent intent = new Intent("ALARM_ACTION");
-        intent.putExtra("param", "My scheduled action");
-        PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, 0);
-        // I choose 3s after the launch of my application
-        alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, operation) ;
-    }
 
     public void SetNotification(String reminder) {
         NotificationCompat.Builder notificationbuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)

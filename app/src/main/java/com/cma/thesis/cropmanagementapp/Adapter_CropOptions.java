@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class Adapter_CropOptions extends BaseAdapter {
-    
+    private FirestoreCropHelper firestoreHelper = new FirestoreCropHelper();
     private Context context;
     private String[] items;
     private String cropId;
@@ -184,7 +184,7 @@ public class Adapter_CropOptions extends BaseAdapter {
                         }
                         varietyAdapter = new Adapter_Variety(context, R.layout.list_variety, varietylist);
                         holder.expandableList.setAdapter(varietyAdapter);
-                        
+
                     } else if (position == 6) {
                         // Planting Materials
                         holder.expandableTitle.setText("Materials:");
@@ -240,146 +240,295 @@ public class Adapter_CropOptions extends BaseAdapter {
         return position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7 || position == 8 || position == 9;
     }
     
+//    private void loadVarietiesFromDatabase() {
+//        varietylist.clear();
+//        // First try Firestore, fall back to SQLite if needed
+//        try {
+//            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+//            String varieties = db.getCropFieldById(cropId, "varieties");
+//            if (varieties != null && !varieties.trim().isEmpty()) {
+//                for (String v : varieties.split("\\r?\\n|,")) {
+//                    String name = v.trim();
+//                    if (!name.isEmpty()) {
+//                        varietylist.add(new Class_Variety(0, name));
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            android.util.Log.e("Adapter_CropOptions", "Error loading varieties: " + e.getMessage());
+//        }
+//        if (varietylist.isEmpty()) {
+//            varietylist.add(new Class_Variety(0, "No varieties available"));
+//        }
+//    }
+
     private void loadVarietiesFromDatabase() {
-        varietylist.clear();
-        // First try Firestore, fall back to SQLite if needed
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            String varieties = db.getCropFieldById(cropId, "varieties");
-            if (varieties != null && !varieties.trim().isEmpty()) {
-                for (String v : varieties.split("\\r?\\n|,")) {
-                    String name = v.trim();
-                    if (!name.isEmpty()) {
-                        varietylist.add(new Class_Variety(0, name));
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                varietylist.clear();
+                String varieties = crop.getVarieties();
+                if (varieties != null && !varieties.trim().isEmpty()) {
+                    for (String v : varieties.split("\\r?\\n|,")) {
+                        String name = v.trim();
+                        if (!name.isEmpty()) varietylist.add(new Class_Variety(0, name));
                     }
                 }
+                if (varietylist.isEmpty()) {
+                    varietylist.add(new Class_Variety(0, "No varieties available"));
+                }
+                notifyDataSetChanged();
             }
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading varieties: " + e.getMessage());
-        }
-        if (varietylist.isEmpty()) {
-            varietylist.add(new Class_Variety(0, "No varieties available"));
-        }
+
+            @Override
+            public void onError(String message) {
+                varietylist.clear();
+                varietylist.add(new Class_Variety(0, "No varieties available"));
+                notifyDataSetChanged();
+            }
+        });
     }
-    
+
     private void loadSeasonFromDatabase() {
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            seasonText = db.getCropFieldById(cropId, "season");
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading season: " + e.getMessage());
-            seasonText = "";
-        }
-        if (seasonText == null || seasonText.trim().isEmpty()) {
-            seasonText = "No season data available";
-        }
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                seasonText = crop.getSeason();
+                if (seasonText == null || seasonText.trim().isEmpty()) {
+                    seasonText = "No introduction available";
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String message) {
+                seasonText = "No introduction available";
+                notifyDataSetChanged();
+            }
+        });
     }
-    
+
     private void loadMaterialsFromAPI() {
+        // Clear only once per expansion, not per Firestore callback refresh
         materialsList.clear();
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            String materials = db.getCropFieldById(cropId, "materials");
-            if (materials != null && !materials.trim().isEmpty()) {
-                for (String v : materials.split("\\r?\\n|,")) {
-                    String name = v.trim();
-                    if (!name.isEmpty()) {
-                        materialsList.add(new Class_CropMaterials(0, name));
-                    }
+
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                String materials = crop.getMaterials();
+
+                if (materials != null) {
+                    materials = materials.trim();
+                }
+
+                if (materials != null && !materials.isEmpty()) {
+                    // Avoid duplicates by clearing before adding and treating it as one entry
+                    materialsList.clear();
+                    materialsList.add(new Class_CropMaterials(0, materials));
+                } else {
+                    materialsList.clear();
+                    materialsList.add(new Class_CropMaterials(0, "No materials available"));
+                }
+
+                // ✅ Notify the materialsAdapter, not the main adapter
+                if (materialsAdapter != null) {
+                    materialsAdapter.notifyDataSetChanged();
                 }
             }
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading materials: " + e.getMessage());
-        }
-        if (materialsList.isEmpty()) {
-            materialsList.add(new Class_CropMaterials(0, "No materials available"));
-        }
+
+            @Override
+            public void onError(String message) {
+                android.util.Log.e("Adapter_CropOptions", "Error loading materials: " + message);
+                materialsList.clear();
+                materialsList.add(new Class_CropMaterials(0, "No materials available"));
+                if (materialsAdapter != null) {
+                    materialsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
-    
+
     private void loadWeedsFromDatabase() {
+        // Clear only once per expansion, not per Firestore callback refresh
         weedsList.clear();
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            String weeds = db.getCropFieldById(cropId, "weed_control");
-            if (weeds != null && !weeds.trim().isEmpty()) {
-                for (String v : weeds.split("\\r?\\n|,")) {
-                    String name = v.trim();
-                    if (!name.isEmpty()) {
-                        weedsList.add(new Class_Weeds(0, name));
-                    }
+
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                String weeds = crop.getweedControl();
+
+                if (weeds != null) {
+                    weeds = weeds.trim();
+                }
+
+                if (weeds != null && !weeds.isEmpty()) {
+                    // Avoid duplicates by clearing before adding and treating it as one entry
+                    weedsList.clear();
+                    weedsList.add(new Class_Weeds(0, weeds));
+                } else {
+                    weedsList.clear();
+                    weedsList.add(new Class_Weeds(0, "No materials available"));
+                }
+
+                // ✅ Notify the materialsAdapter, not the main adapter
+                if (weedsAdapter != null) {
+                    weedsAdapter.notifyDataSetChanged();
                 }
             }
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading weeds: " + e.getMessage());
-        }
-        if (weedsList.isEmpty()) {
-            weedsList.add(new Class_Weeds(0, "No weed control data available"));
-        }
+
+            @Override
+            public void onError(String message) {
+                android.util.Log.e("Adapter_CropOptions", "Error loading materials: " + message);
+                weedsList.clear();
+                weedsList.add(new Class_Weeds(0, "No materials available"));
+                if (weedsAdapter != null) {
+                    weedsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
-    
+
+
+
+//    private void loadIntroductionFromDatabase() {
+//        try {
+//            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+//            introductionText = db.getCropFieldById(cropId, "description");
+//        } catch (Exception e) {
+//            android.util.Log.e("Adapter_CropOptions", "Error loading introduction: " + e.getMessage());
+//            introductionText = "";
+//        }
+//        if (introductionText == null || introductionText.trim().isEmpty()) {
+//            introductionText = "No introduction available";
+//        }
+//    }
+
     private void loadIntroductionFromDatabase() {
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            introductionText = db.getCropFieldById(cropId, "description");
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading introduction: " + e.getMessage());
-            introductionText = "";
-        }
-        if (introductionText == null || introductionText.trim().isEmpty()) {
-            introductionText = "No introduction available";
-        }
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                introductionText = crop.getDesc();
+                if (introductionText == null || introductionText.trim().isEmpty()) {
+                    introductionText = "No introduction available";
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String message) {
+                introductionText = "No introduction available";
+                notifyDataSetChanged();
+            }
+        });
     }
     
+//    private void loadScientificNameFromDatabase() {
+//        try {
+//            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+//            scientificNameText = db.getCropFieldById(cropId, "scienceName");
+//        } catch (Exception e) {
+//            android.util.Log.e("Adapter_CropOptions", "Error loading scientific name: " + e.getMessage());
+//            scientificNameText = "";
+//        }
+//        if (scientificNameText == null || scientificNameText.trim().isEmpty()) {
+//            scientificNameText = "No scientific name available";
+//        }
+//    }
+
+
     private void loadScientificNameFromDatabase() {
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            scientificNameText = db.getCropFieldById(cropId, "science_name");
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading scientific name: " + e.getMessage());
-            scientificNameText = "";
-        }
-        if (scientificNameText == null || scientificNameText.trim().isEmpty()) {
-            scientificNameText = "No scientific name available";
-        }
+
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                scientificNameText = crop.getscienceName();
+                if (scientificNameText == null || scientificNameText.trim().isEmpty()) {
+                    scientificNameText = "No scientific name available";
+                }
+                notifyDataSetChanged(); // refresh list UI after Firestore returns
+            }
+
+            @Override
+            public void onError(String error) {
+                android.util.Log.e("Adapter_CropOptions", "Error loading scientific name: " + error);
+                scientificNameText = "No scientific name available";
+                notifyDataSetChanged();
+            }
+        });
     }
-    
+
+
     private void loadIrrigationFromDatabase() {
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            irrigationText = db.getCropFieldById(cropId, "irrigation");
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading irrigation: " + e.getMessage());
-            irrigationText = "";
-        }
-        if (irrigationText == null || irrigationText.trim().isEmpty()) {
-            irrigationText = "No irrigation data available";
-        }
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                irrigationText = crop.getIrrigation();
+                if (irrigationText == null || irrigationText.trim().isEmpty()) {
+                    irrigationText = "No scientific name available";
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                android.util.Log.e("Adapter_CropOptions", "Error loading scientific name: " + error);
+                irrigationText = "No scientific name available";
+                notifyDataSetChanged();
+            }
+        });
     }
     
+//    private void loadDurationFromDatabase() {
+//        try {
+//            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
+//            durationText = db.getCropFieldById(cropId, "duration");
+//        } catch (Exception e) {
+//            android.util.Log.e("Adapter_CropOptions", "Error loading duration: " + e.getMessage());
+//            durationText = "";
+//        }
+//        if (durationText == null || durationText.trim().isEmpty()) {
+//            durationText = "No duration data available";
+//        }
+//    }
+
+
     private void loadDurationFromDatabase() {
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            durationText = db.getCropFieldById(cropId, "duration");
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading duration: " + e.getMessage());
-            durationText = "";
-        }
-        if (durationText == null || durationText.trim().isEmpty()) {
-            durationText = "No duration data available";
-        }
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                durationText = crop.getDuration();
+                if (durationText == null || durationText.trim().isEmpty()) {
+                    durationText = "No duration data available";
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String message) {
+                durationText = "No duration data available";
+                notifyDataSetChanged();
+            }
+        });
     }
+
+
     
     private void loadHarvestingFromDatabase() {
-        try {
-            Class_DatabaseHelper db = new Class_DatabaseHelper(context);
-            harvestingText = db.getCropFieldById(cropId, "harvesting");
-        } catch (Exception e) {
-            android.util.Log.e("Adapter_CropOptions", "Error loading harvesting: " + e.getMessage());
-            harvestingText = "";
-        }
-        if (harvestingText == null || harvestingText.trim().isEmpty()) {
-            harvestingText = "No harvesting data available";
-        }
+        firestoreHelper.getCropById(cropId, new FirestoreCropHelper.CropCallback() {
+            @Override
+            public void onSuccess(Class_Crops crop) {
+                harvestingText = crop.getHarvesting();
+                if (harvestingText == null || harvestingText.trim().isEmpty()) {
+                    harvestingText = "No introduction available";
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String message) {
+                harvestingText = "No introduction available";
+                notifyDataSetChanged();
+            }
+        });
     }
     
     static class ViewHolder {

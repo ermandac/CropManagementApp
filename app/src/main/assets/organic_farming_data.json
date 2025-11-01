@@ -1,0 +1,112 @@
+[
+  {
+    "id": "1",
+    "name": "Composting",
+    "type": "Farming Method",
+    "category": "Soil Enhancement",
+    "description": "Natural decomposition of organic matter to create nutrient-rich soil amendment. Composting improves soil structure, water retention, and provides essential nutrients.",
+    "materials": ["Dried leaves", "Kitchen waste (vegetable scraps)", "Rice straw", "Animal manure", "Coconut husk", "Grass clippings"],
+    "benefits": "Improves soil fertility, reduces waste, enhances water retention, promotes beneficial microorganisms, reduces need for chemical fertilizers",
+    "applicationMethod": "Mix materials in layers, maintain moisture, turn regularly, apply mature compost to soil",
+    "duration": "2-3 months for complete decomposition"
+  },
+  {
+    "id": "2",
+    "name": "Vermicomposting",
+    "type": "Farming Method",
+    "category": "Soil Enhancement",
+    "description": "Composting using earthworms to break down organic waste into high-quality fertilizer. Produces nutrient-rich vermicast and liquid fertilizer.",
+    "materials": ["African night crawlers", "Kitchen scraps", "Paper waste", "Coconut coir", "Rice bran", "Cardboard pieces"],
+    "benefits": "Fast decomposition, produces liquid fertilizer, high nutrient content, odorless process, excellent for seedlings",
+    "applicationMethod": "Set up worm bins, add organic waste regularly, harvest vermicast every 2-3 months, dilute liquid for foliar spray",
+    "duration": "1-2 months for vermicast production"
+  },
+  {
+    "id": "3",
+    "name": "Neem-Based Pest Control",
+    "type": "Material",
+    "category": "Natural Pesticide",
+    "description": "Natural insecticide derived from neem tree seeds. Effective against various pests while safe for beneficial insects when used properly.",
+    "materials": ["Neem seeds", "Neem leaves", "Neem oil", "Water", "Organic soap (as emulsifier)"],
+    "benefits": "Broad spectrum pest control, biodegradable, non-toxic to humans and animals, also acts as fungicide",
+    "applicationMethod": "Crush neem seeds, soak in water overnight, strain and spray on plants. For oil: mix with soap and water, spray early morning or evening",
+    "duration": "Effect lasts 5-7 days, reapply as needed"
+  },
+  {
+    "id": "4",
+    "name": "Fermented Plant Juice (FPJ)",
+    "type": "Material",
+    "category": "Organic Fertilizer",
+    "description": "Korean Natural Farming technique using fermented plant materials to create liquid fertilizer rich in nutrients and beneficial microorganisms.",
+    "materials": ["Young plant shoots (banana, papaya, or malunggay)", "Brown sugar", "Clay pot or plastic container", "Breathable cloth cover"],
+    "benefits": "Rich in growth hormones, enhances plant vigor, improves disease resistance, promotes flowering and fruiting",
+    "applicationMethod": "Chop plants, mix with equal weight of brown sugar, ferment for 7 days, dilute 1:500 with water for application",
+    "duration": "Fermentation: 7 days, Shelf life: 6 months"
+  },
+  {
+    "id": "5",
+    "name": "Crop Rotation",
+    "type": "Farming Method",
+    "category": "Soil Management",
+    "description": "Systematic planting of different crops in sequence on the same land to improve soil health and reduce pest and disease buildup.",
+    "materials": ["Legumes (beans, peanuts)", "Leafy vegetables", "Root crops", "Brassicas (cabbage family)", "Cover crops"],
+    "benefits": "Breaks pest cycles, improves soil fertility naturally, reduces disease pressure, enhances biodiversity",
+    "applicationMethod": "Alternate between nitrogen-fixing and nitrogen-consuming crops. Follow heavy feeders with light feeders. Include cover crops",
+    "duration": "Seasonal rotation (3-4 crop cycles per year)"
+  },
+  {
+    "id": "6",
+    "name": "Fish Amino Acid (FAA)",
+    "type": "Material",
+    "category": "Organic Fertilizer",
+    "description": "Fermented fish solution providing amino acids, minerals, and enzymes for plant growth. Excellent nitrogen source.",
+    "materials": ["Fresh fish scraps", "Brown sugar or molasses", "Clay jar", "Charcoal (to reduce odor)"],
+    "benefits": "High nitrogen content, rich in amino acids, improves plant immunity, enhances fruit quality, promotes vegetative growth",
+    "applicationMethod": "Layer fish with sugar in jar, ferment for 3 months, extract liquid, dilute 1:1000 for foliar spray or soil drench",
+    "duration": "Fermentation: 3 months, Shelf life: 1 year"
+  },
+  {
+    "id": "7",
+    "name": "Indigenous Microorganisms (IMO)",
+    "type": "Material",
+    "category": "Soil Inoculant",
+    "description": "Collection and cultivation of beneficial local microorganisms to improve soil health and plant growth.",
+    "materials": ["Cooked rice", "Wooden box", "Molasses", "Rice bran", "Soil from forest floor"],
+    "benefits": "Improves soil structure, enhances nutrient availability, suppresses diseases, increases beneficial microbes, speeds decomposition",
+    "applicationMethod": "Collect wild microbes on rice, multiply with molasses and bran, apply to compost or directly to soil",
+    "duration": "IMO-4 production: 2-3 weeks"
+  },
+  {
+    "id": "8",
+    "name": "Botanical Pesticides",
+    "type": "Material",
+    "category": "Natural Pesticide",
+    "description": "Plant-based pest control solutions using locally available plants with insecticidal properties.",
+    "materials": ["Chili peppers", "Garlic", "Onion", "Ginger", "Lemongrass", "Kakawate leaves"],
+    "benefits": "Safe for environment, low cost, readily available, targets specific pests, no residue issues",
+    "applicationMethod": "Chop and soak materials in water (24 hours), strain, add soap, spray on affected plants every 3-5 days",
+    "duration": "Effective for 3-4 days, reapply after rain"
+  },
+  {
+    "id": "9",
+    "name": "Green Manuring",
+    "type": "Farming Method",
+    "category": "Soil Enhancement",
+    "description": "Growing and incorporating specific crops into soil to improve fertility and organic matter content.",
+    "materials": ["Mung bean", "Cowpea", "Sunhemp", "Sesbania", "Azolla (for rice)", "Ipil-ipil"],
+    "benefits": "Adds nitrogen to soil, improves soil structure, suppresses weeds, prevents erosion, provides organic matter",
+    "applicationMethod": "Plant green manure crop, allow to grow 6-8 weeks, cut and incorporate into soil 2 weeks before main crop",
+    "duration": "6-8 weeks for green manure crop growth"
+  },
+  {
+    "id": "10",
+    "name": "Mulching",
+    "type": "Farming Method",
+    "category": "Soil Management",
+    "description": "Covering soil with organic materials to conserve moisture, suppress weeds, and improve soil health.",
+    "materials": ["Rice straw", "Dried leaves", "Grass clippings", "Coconut husk", "Sawdust", "Newspaper"],
+    "benefits": "Conserves soil moisture, regulates temperature, suppresses weeds, prevents erosion, adds organic matter as it decomposes",
+    "applicationMethod": "Spread 2-4 inches of organic material around plants, keep away from stems, replenish as needed",
+    "duration": "Decomposition: 2-6 months depending on material"
+  }
+]

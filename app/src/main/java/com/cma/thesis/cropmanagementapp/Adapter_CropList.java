@@ -13,21 +13,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+public class Adapter_CropList extends BaseAdapter {
 
-
-public class Adapter_CropList extends BaseAdapter
-{
+    private Context context;
+    private ArrayList<Class_Crops> croplist;
+    private LayoutInflater inflater;
 
     public Adapter_CropList(Context context, int layout, ArrayList<Class_Crops> croplist) {
         this.context = context;
-        this.layout = layout;
         this.croplist = croplist;
+        this.inflater = LayoutInflater.from(context);
     }
-
-    private Context context;
-    private  int layout;
-
-    private ArrayList<Class_Crops> croplist;
 
     @Override
     public int getCount() {
@@ -45,39 +41,47 @@ public class Adapter_CropList extends BaseAdapter
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
 
-        View row = view;
-        viewHolder vh = new viewHolder();
-
-        if(row == null)
-        {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(layout,null);
-
-            vh.imgcrop = (ImageView)row.findViewById(R.id.imgcropview);
-            vh.txtcropname = (TextView)row.findViewById(R.id.txtcropname);
-
-            row.setTag(vh);
-        }
-        else
-        {
-            vh = (viewHolder) row.getTag();
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.list_crop_card_item, parent, false);
+            holder = new ViewHolder();
+            holder.cropIcon = convertView.findViewById(R.id.crop_icon);
+            holder.cropName = convertView.findViewById(R.id.crop_name);
+            holder.scientificName = convertView.findViewById(R.id.scientific_name);
+            holder.climate = convertView.findViewById(R.id.climate);
+            holder.season = convertView.findViewById(R.id.season);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
         Class_Crops crop = croplist.get(position);
 
-        vh.txtcropname.setText(crop.getCropname());
-        // Temporarily avoid decoding large blobs on UI thread to prevent ANRs
-        vh.imgcrop.setImageResource(R.mipmap.ic_launcher);
+        // Set crop name
+        holder.cropName.setText(crop.getCropname() != null ? crop.getCropname() : "Unknown Crop");
 
-        return row;
+        // Set scientific name
+        holder.scientificName.setText(crop.getscienceName() != null ? crop.getscienceName() : "N/A");
+
+        // Set climate
+        holder.climate.setText(crop.getSoil_climate() != null ? crop.getSoil_climate() : "N/A");
+
+        // Set season
+        holder.season.setText(crop.getSeason() != null ? crop.getSeason() : "N/A");
+
+        // Set crop icon (placeholder for now)
+        holder.cropIcon.setImageResource(R.drawable.plants);
+
+        return convertView;
     }
 
-    private class viewHolder
-    {
-        ImageView imgcrop;
-        TextView txtcropname;
+    static class ViewHolder {
+        ImageView cropIcon;
+        TextView cropName;
+        TextView scientificName;
+        TextView climate;
+        TextView season;
     }
-
 }

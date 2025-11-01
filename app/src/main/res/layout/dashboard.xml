@@ -377,7 +377,7 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/ic_category_vegetables"
+                                android:src="@drawable/ic_category_vegetable"
                                 android:scaleType="centerInside"/>
                         </LinearLayout>
                         

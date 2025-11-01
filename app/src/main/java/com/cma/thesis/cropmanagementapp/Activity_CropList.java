@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,11 +47,9 @@ import java.util.Calendar;
 public class Activity_CropList extends AppCompatActivity
 {
 
-    GridView gridView;
+    ListView listView;
     ArrayList<Class_Crops> croplist;
     Adapter_CropList croplistadapter;
-    ImageView imgcropimageupdate;
-    public static Class_Functions function;
     String cat_id="";
     String subcat = "";
     FirestoreCropHelper firestoreHelper;
@@ -64,11 +62,11 @@ public class Activity_CropList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_croplist);
 
-        gridView = (GridView) findViewById(R.id.cropGridView);
+        listView = findViewById(R.id.cropListView);
         croplist = new ArrayList<>();
-        croplistadapter = new Adapter_CropList(this,R.layout.activity_cropitems,croplist);
+        croplistadapter = new Adapter_CropList(this,R.layout.list_crop_card_item,croplist);
 
-        gridView.setAdapter(croplistadapter);
+        listView.setAdapter(croplistadapter);
 
         cat_id = getIntent().getStringExtra("category");
         subcat = getIntent().getStringExtra("sub");
@@ -82,8 +80,8 @@ public class Activity_CropList extends AppCompatActivity
         // Load from Firestore
         loadCrops();
 
-        // action when clicking specific item on gridview
-        gridView.setOnItemClickListener(onListViewClick);
+        // action when clicking specific item on listview
+        listView.setOnItemClickListener(onListViewClick);
 
     }
 

@@ -3,110 +3,154 @@ package com.cma.thesis.cropmanagementapp;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class activity_fetilizer extends AppCompatActivity {
 
     ListView lv;
-    ArrayList<Class_Fertilizer> fertilizerlist;
+    ArrayList<Class_Fertilizer> allFertilizers;
+    ArrayList<Class_Fertilizer> filteredFertilizers;
     Adapter_Fertilizer adapterfertilizer;
-    String cropID;
+    FirestoreFertilizerHelper firestoreHelper;
+    ProgressBar progressBar;
+    LinearLayout emptyStateLayout;
+    Spinner categorySpinner;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fetilizer);
 
+        // Set up ActionBar with title and back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Fertilizer Information");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        lv = (ListView) findViewById(R.id.listfertilizer);
-        fertilizerlist = new ArrayList<>();
-        adapterfertilizer = new Adapter_Fertilizer(this, R.layout.list_fertilizer_item_details, fertilizerlist);
+        // Initialize Firestore helper
+        firestoreHelper = new FirestoreFertilizerHelper();
+
+        lv = findViewById(R.id.listfertilizer);
+        allFertilizers = new ArrayList<>();
+        filteredFertilizers = new ArrayList<>();
+        adapterfertilizer = new Adapter_Fertilizer(this, R.layout.list_fertilizer_item_details, filteredFertilizers);
         lv.setAdapter(adapterfertilizer);
 
-        String[] arraySpinner = new String[] {
-                "Fruits", "Medicinal", "Plantation", "Pulses", "Spices", "Vegetables", "Organic"
-        };
-        Spinner s = (Spinner) findViewById(R.id.spinnerMonth);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        s.setAdapter(adapter);
+        // Initialize views
+        progressBar = findViewById(R.id.progressBar);
+        emptyStateLayout = findViewById(R.id.emptyStateLayout);
+        categorySpinner = findViewById(R.id.spinnerMonth);
 
-        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Set up category filter spinner
+        String[] arraySpinner = new String[] {
+                "All", "Nitrogen", "Complete", "Organic", "Phosphorus", "Potassium", 
+                "Foliar", "Secondary", "Micronutrient", "Specialty"
+        };
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(activity_fetilizer.this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-                generateTopCrop(adapterView.getSelectedItem().toString());
+                String selectedCategory = adapterView.getSelectedItem().toString();
+                filterFertilizersByCategory(selectedCategory);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                // Do nothing
+            }
+        });
+        
+        // Load all fertilizers once
+        loadAllFertilizers();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle back button press
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Load all fertilizers from Firestore (called once)
+     */
+    private void loadAllFertilizers() {
+        progressBar.setVisibility(View.VISIBLE);
+        lv.setVisibility(View.GONE);
+        emptyStateLayout.setVisibility(View.GONE);
+
+        firestoreHelper.getAllFertilizers(new FirestoreFertilizerHelper.FertilizerCallback() {
+            @Override
+            public void onSuccess(List<Class_Fertilizer> fertilizers) {
+                progressBar.setVisibility(View.GONE);
+                allFertilizers.clear();
+                allFertilizers.addAll(fertilizers);
+                
+                // Apply current filter
+                String selectedCategory = categorySpinner.getSelectedItem().toString();
+                filterFertilizersByCategory(selectedCategory);
+            }
+
+            @Override
+            public void onError(String error) {
+                progressBar.setVisibility(View.GONE);
+                emptyStateLayout.setVisibility(View.VISIBLE);
+                Toast.makeText(activity_fetilizer.this, 
+                        "Error loading fertilizers: " + error, 
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-    private void generateTopCrop(String category) {
-        fertilizerlist.clear();
-
-
-
-        Ipaddress address = new Ipaddress();
-        String planList = address.ipaddress + "model/fertilizer_api.php?category="+category;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, planList,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            //converting the string to json array object
-                            JSONArray array = new JSONArray(response);
-
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
-                                //getting product object from json array
-                                JSONObject fertilize = array.getJSONObject(i);
-
-                                String chemical = fertilize.getString("chemical");
-                                String category = fertilize.getString("category");
-
-                                fertilizerlist.add(new Class_Fertilizer(category,chemical));
-
-                            }
-                            adapterfertilizer.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(getApplicationContext(), "error" + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-        //adding our stringrequest to queue
-        Volley.newRequestQueue(this).add(stringRequest);
+    /**
+     * Filter fertilizers by category (client-side filtering)
+     */
+    private void filterFertilizersByCategory(String category) {
+        filteredFertilizers.clear();
+        
+        if (category.equals("All")) {
+            filteredFertilizers.addAll(allFertilizers);
+        } else {
+            for (Class_Fertilizer fertilizer : allFertilizers) {
+                if (fertilizer.getCategory() != null && 
+                    fertilizer.getCategory().equalsIgnoreCase(category)) {
+                    filteredFertilizers.add(fertilizer);
+                }
+            }
+        }
+        
+        adapterfertilizer.notifyDataSetChanged();
+        
+        // Show/hide empty state
+        if (filteredFertilizers.isEmpty()) {
+            lv.setVisibility(View.GONE);
+            emptyStateLayout.setVisibility(View.VISIBLE);
+        } else {
+            lv.setVisibility(View.VISIBLE);
+            emptyStateLayout.setVisibility(View.GONE);
+        }
     }
+
 }

@@ -37,8 +37,10 @@ public class Activity_AdminDashboard extends AppCompatActivity {
     private TextView tvSpicesCount;
     private TextView tvPlantationCount;
     private TextView tvMedicinalCount;
-    private TextView tvOrganicCount;
     private TextView tvPestCount;
+    private TextView tvOrganicCount;
+    private TextView tvFertilizerCount;
+    private TextView tvSuggestedCropCount;
     
     private CardView cardVegetables;
     private CardView cardFruits;
@@ -46,8 +48,10 @@ public class Activity_AdminDashboard extends AppCompatActivity {
     private CardView cardSpices;
     private CardView cardPlantation;
     private CardView cardMedicinal;
-    private CardView cardOrganic;
     private CardView cardPest;
+    private CardView cardOrganic;
+    private CardView cardFertilizer;
+    private CardView cardSuggestedCrop;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +103,10 @@ public class Activity_AdminDashboard extends AppCompatActivity {
         tvSpicesCount = findViewById(R.id.tvSpicesCount);
         tvPlantationCount = findViewById(R.id.tvPlantationCount);
         tvMedicinalCount = findViewById(R.id.tvMedicinalCount);
-        tvOrganicCount = findViewById(R.id.tvOrganicCount);
         tvPestCount = findViewById(R.id.tvPestCount);
+        tvOrganicCount = findViewById(R.id.tvOrganicCount);
+        tvFertilizerCount = findViewById(R.id.tvFertilizerCount);
+        tvSuggestedCropCount = findViewById(R.id.tvSuggestedCropCount);
         
         cardVegetables = findViewById(R.id.cardVegetables);
         cardFruits = findViewById(R.id.cardFruits);
@@ -108,33 +114,44 @@ public class Activity_AdminDashboard extends AppCompatActivity {
         cardSpices = findViewById(R.id.cardSpices);
         cardPlantation = findViewById(R.id.cardPlantation);
         cardMedicinal = findViewById(R.id.cardMedicinal);
-        cardOrganic = findViewById(R.id.cardOrganic);
         cardPest = findViewById(R.id.cardPest);
+        cardOrganic = findViewById(R.id.cardOrganic);
+        cardFertilizer = findViewById(R.id.cardFertilizer);
+        cardSuggestedCrop = findViewById(R.id.cardSuggestedCrop);
     }
     
     private void setupCategoryClickListeners() {
+        // Crop categories
         cardVegetables.setOnClickListener(v -> openCropList("2", "Vegetables"));
         cardFruits.setOnClickListener(v -> openCropList("1", "Fruits"));
         cardPulses.setOnClickListener(v -> openCropList("3", "Pulses"));
         cardSpices.setOnClickListener(v -> openCropList("4", "Spices"));
         cardPlantation.setOnClickListener(v -> openCropList("5", "Plantation Crops"));
         cardMedicinal.setOnClickListener(v -> openCropList("6", "Medicinal Plants"));
-        cardOrganic.setOnClickListener(v -> openCropList("7", "Organic Farming"));
-        cardPest.setOnClickListener(v -> openCropList("8", "Pest Control"));
+        
+        // Specialized content types
+        cardPest.setOnClickListener(v -> openPestManagement());
+        cardOrganic.setOnClickListener(v -> openOrganicFarming());
+        cardFertilizer.setOnClickListener(v -> openFertilizers());
+        cardSuggestedCrop.setOnClickListener(v -> openSuggestedCrops());
     }
     
     private void loadCropCounts() {
         progressBar.setVisibility(View.VISIBLE);
         
-        // Load count for each category
+        // Load crop category counts
         loadCategoryCount("2", tvVegetablesCount);
         loadCategoryCount("1", tvFruitsCount);
         loadCategoryCount("3", tvPulsesCount);
         loadCategoryCount("4", tvSpicesCount);
         loadCategoryCount("5", tvPlantationCount);
         loadCategoryCount("6", tvMedicinalCount);
-        loadCategoryCount("7", tvOrganicCount);
-        loadCategoryCount("8", tvPestCount);
+        
+        // Load specialized content type counts
+        loadContentCount("pests", tvPestCount);
+        loadContentCount("organic_farming", tvOrganicCount);
+        loadContentCount("fertilizers", tvFertilizerCount);
+        loadContentCount("suggested_crops", tvSuggestedCropCount);
     }
     
     private void loadCategoryCount(String categoryId, TextView countView) {
@@ -156,10 +173,45 @@ public class Activity_AdminDashboard extends AppCompatActivity {
                 });
     }
     
+    private void loadContentCount(String collectionName, TextView countView) {
+        db.collection(collectionName)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int count = queryDocumentSnapshots.size();
+                    String countText = count + (count == 1 ? " item" : " items");
+                    countView.setText(countText);
+                    progressBar.setVisibility(View.GONE);
+                })
+                .addOnFailureListener(e -> {
+                    countView.setText("Error");
+                    progressBar.setVisibility(View.GONE);
+                });
+    }
+    
     private void openCropList(String categoryId, String categoryName) {
         Intent intent = new Intent(this, Activity_AdminCropList.class);
         intent.putExtra("categoryId", categoryId);
         intent.putExtra("categoryName", categoryName);
+        startActivity(intent);
+    }
+    
+    private void openPestManagement() {
+        Intent intent = new Intent(this, Activity_AdminPestList.class);
+        startActivity(intent);
+    }
+    
+    private void openOrganicFarming() {
+        Intent intent = new Intent(this, Activity_AdminOrganicList.class);
+        startActivity(intent);
+    }
+    
+    private void openFertilizers() {
+        Intent intent = new Intent(this, Activity_AdminFertilizerList.class);
+        startActivity(intent);
+    }
+    
+    private void openSuggestedCrops() {
+        Intent intent = new Intent(this, Activity_AdminSuggestedCropList.class);
         startActivity(intent);
     }
     

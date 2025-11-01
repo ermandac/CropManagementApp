@@ -65,25 +65,103 @@ public class Activity_Home extends AppCompatActivity
     }
 
     private void initializeFirestore() {
-        // Data migration is complete - disable automatic migration to avoid redundant uploads
-        // Uncomment the code below if you need to re-migrate data to Firestore
-        /*
-        FirestoreInitializer initializer = new FirestoreInitializer(this);
-        initializer.uploadMigratedData(new FirestoreInitializer.UploadCallback() {
-            @Override
-            public void onSuccess(String message) {
-                Log.d("TAG", "Firestore Upload Success: " + message);
-                Toast.makeText(Activity_Home.this, "Data migrated to Firestore!", Toast.LENGTH_LONG).show();
-            }
+        // BULK UPLOAD ALL DATA TO FIRESTORE - DISABLED AFTER SUCCESSFUL UPLOAD
+        // The bulk upload has been successfully completed and is now disabled.
+        // To re-enable bulk upload, uncomment the code block below.
+        // This uploads: categories, crops, procedures, fertilizers, pests, organic farming, and suggested crops
+        
+        // FirestoreInitializer initializer = new FirestoreInitializer(this);
+        // initializer.uploadAllData(new FirestoreInitializer.UploadCallback() {
+        //     @Override
+        //     public void onSuccess(String message) {
+        //         Log.d("TAG", "Bulk Upload Success:\n" + message);
+        //         Toast.makeText(Activity_Home.this, "All data uploaded successfully!", Toast.LENGTH_LONG).show();
+        //     }
 
-            @Override
-            public void onError(String error) {
-                Log.e("TAG", "Firestore Upload Error: " + error);
-                Toast.makeText(Activity_Home.this, "Error: " + error, Toast.LENGTH_LONG).show();
-            }
-        });
-        */
-        Log.d("TAG", "Firestore migration already complete - skipping automatic upload");
+        //     @Override
+        //     public void onError(String error) {
+        //         Log.e("TAG", "Bulk Upload Error:\n" + error);
+        //         Toast.makeText(Activity_Home.this, "Upload error - check logs", Toast.LENGTH_LONG).show();
+        //     }
+        // });
+        
+        // INDIVIDUAL UPLOAD METHODS (for reference or selective uploads)
+        // Uncomment specific methods below if you only need to upload certain categories
+        
+        // Upload only migrated data (categories, crops, procedures)
+    //     initializer.uploadMigratedData(new FirestoreInitializer.UploadCallback() {
+    //         @Override
+    //         public void onSuccess(String message) {
+    //             Log.d("TAG", "Firestore Upload Success: " + message);
+    //             Toast.makeText(Activity_Home.this, "Data migrated to Firestore!", Toast.LENGTH_LONG).show();
+    //         }
+
+    //         @Override
+    //         public void onError(String error) {
+    //             Log.e("TAG", "Firestore Upload Error: " + error);
+    //             Toast.makeText(Activity_Home.this, "Error: " + error, Toast.LENGTH_LONG).show();
+    //         }
+    //     });
+
+        // Upload only Fertilizer Data
+    //     initializer.uploadFertilizerData(new FirestoreInitializer.UploadCallback() {
+    //         @Override
+    //         public void onSuccess(String message) {
+    //             Log.d("TAG", "Fertilizer Upload Success: " + message);
+    //             Toast.makeText(Activity_Home.this, message, Toast.LENGTH_LONG).show();
+    //         }
+
+    //         @Override
+    //         public void onError(String error) {
+    //             Log.e("TAG", "Fertilizer Upload Error: " + error);
+    //             Toast.makeText(Activity_Home.this, "Error: " + error, Toast.LENGTH_LONG).show();
+    //         }
+    //     });
+
+        // Upload only Pest Data
+    //     initializer.uploadPestData(new FirestoreInitializer.UploadCallback() {
+    //         @Override
+    //         public void onSuccess(String message) {
+    //             Log.d("TAG", "Pest Upload Success: " + message);
+    //             Toast.makeText(Activity_Home.this, message, Toast.LENGTH_LONG).show();
+    //         }
+
+    //         @Override
+    //         public void onError(String error) {
+    //             Log.e("TAG", "Pest Upload Error: " + error);
+    //             Toast.makeText(Activity_Home.this, "Error: " + error, Toast.LENGTH_LONG).show();
+    //         }
+    //     });
+    
+        // Upload only Organic Farming Data
+    //     initializer.uploadOrganicFarmingData(new FirestoreInitializer.UploadCallback() {
+    //         @Override
+    //         public void onSuccess(String message) {
+    //             Log.d("TAG", "Organic Upload Success: " + message);
+    //             Toast.makeText(Activity_Home.this, message, Toast.LENGTH_LONG).show();
+    //         }
+
+    //         @Override
+    //         public void onError(String error) {
+    //             Log.e("TAG", "Organic Upload Error: " + error);
+    //             Toast.makeText(Activity_Home.this, "Error: " + error, Toast.LENGTH_LONG).show();
+    //         }
+    //     });
+
+        // Upload only Suggested Crops Data
+    //     initializer.uploadSuggestedCropsData(new FirestoreInitializer.UploadCallback() {
+    //         @Override
+    //         public void onSuccess(String message) {
+    //             Log.d("TAG", "Suggested Crops Upload Success: " + message);
+    //             Toast.makeText(Activity_Home.this, message, Toast.LENGTH_LONG).show();
+    //         }
+
+    //         @Override
+    //         public void onError(String error) {
+    //             Log.e("TAG", "Suggested Crops Upload Error: " + error);
+    //             Toast.makeText(Activity_Home.this, "Error: " + error, Toast.LENGTH_LONG).show();
+    //         }
+    //     });
     }
 
     @Override
@@ -131,11 +209,15 @@ public class Activity_Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         if (id == R.id.nav_suggested) {
-            Intent intent = new Intent(getApplicationContext(), activity_topcrop.class);
+            Intent intent = new Intent(getApplicationContext(), Activity_SuggestedCrops.class);
             startActivity(intent);
         }
         else  if (id == R.id.nav_fertilizers) {
             Intent intent = new Intent(getApplicationContext(), activity_fetilizer.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_help_faq) {
+            Intent intent = new Intent(getApplicationContext(), Activity_FAQ.class);
             startActivity(intent);
         }
         else if (id == R.id.nav_admin_panel) {
@@ -186,12 +268,14 @@ public class Activity_Home extends AppCompatActivity
 
     public void onClickPest(View v)
     {
-        notifyComingSoon("Pest");
+        Intent intent = new Intent(getApplicationContext(), Activity_Pest.class);
+        startActivity(intent);
     }
 
     public void onClickOrganic(View v)
     {
-        notifyComingSoon("Organic");
+        Intent intent = new Intent(getApplicationContext(), Activity_OrganicFarming.class);
+        startActivity(intent);
     }
 
     public void SetNotification()

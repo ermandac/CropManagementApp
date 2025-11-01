@@ -55,142 +55,118 @@
       }
     }
   },
-  "crops": {
-    "9": {
-      "id": 9,
-      "categoryId": 1,
-      "cropName": "Banana",
-      "description": "A major global fruit crop, rich in potassium and fiber. Cultivated in tropical and subtropical regions. The plant is a large herbaceous flowering plant.",
-      "image": null,
-      "scienceName": "Musa paradisiaca L. Musaceae",
-      "duration": "12–18 months (from planting to harvest of bunch)",
-      "varieties": [
-        "Cavendish",
-        " Lakatan",
-        " Saba",
-        " Grand Nain"
-      ],
-      "soilClimate": "Deep, rich, well-drained loamy soils are ideal. Requires warm, humid, and frost-free conditions. pH 5.5–6.5.",
-      "season": "Planted year-round in tropical areas; usually June to July for peak season.",
-      "materials": "Suckers (seedlings from the base of the parent plant)",
-      "mainField": "Dig 45×45×45 cm pits. Fill with topsoil, FYM, and a nematicide. Plant suckers upright.",
-      "weedControl": "Regular manual weeding is essential. Herbicides like Diuron or Paraquat can be used to control weeds in inter-rows.",
-      "irrigation": "Requires copious water, especially during summer and the flowering period. Apply water every 3–7 days in dry spells. Drip irrigation is highly effective.",
-      "growthManagement": "Desuckering (removing unwanted suckers) and propping (supporting bunches with bamboo) are crucial. Bagging the bunch protects fruit from pests and improves appearance.",
-      "harvesting": "Harvested when the fruit is plump, fully developed, but still green. Maturity is judged by the angularity of the fruit, which becomes less angular as it matures.",
-      "createdAt": {
-        "_type": "Timestamp",
-        "value": "2025-10-20T13:00:52.889997"
-      }
-    },
-    "10": {
-      "id": 10,
-      "categoryId": 1,
-      "cropName": "Orange",
-      "description": "One of the most important citrus fruits, valued for its high Vitamin C content and juice. Grown widely in subtropical climates.",
-      "image": null,
-      "scienceName": "Citrus sinensis (L.) Osbeck Rutaceae",
-      "duration": "Perennial; takes 3–5 years to bear fruit, productive for 20+ years.",
-      "varieties": [
-        "Valencia",
-        " Navel",
-        " Hamlin",
-        " Blood Orange"
-      ],
-      "soilClimate": "Well-drained, deep, loamy soils are preferred. Cannot tolerate waterlogging or high salinity. Optimal pH 6.0–7.5.",
-      "season": "Flowering occurs in late winter/early spring; harvest depends on variety, usually late autumn to spring.",
-      "materials": "Grafted seedlings from a registered nursery, budded onto appropriate rootstocks (e.g., Rough Lemon).",
-      "mainField": "Prepare the field by ploughing and leveling. Dig pits 60×60×60 cm, fill with FYM and soil mixture. Plant grafts carefully.",
-      "weedControl": "Inter-cultivation and chemical control with Glyphosate or Simazine can be used. Maintain a clean basin around the tree.",
-      "irrigation": "Requires moderate, regular irrigation, especially during flowering and fruit development. Stress can cause fruit drop. Avoid overhead irrigation.",
-      "growthManagement": "Pruning to remove dead wood and open the canopy. Girdling or ring-barking can sometimes be done to induce flowering in shy bearers.",
-      "harvesting": "Harvested when the fruit reaches optimum size, color, and sugar/acid ratio (Brix). Hand picking is common to avoid damage.",
-      "createdAt": {
-        "_type": "Timestamp",
-        "value": "2025-10-20T13:00:52.889997"
-      }
-    },
-    "11": {
-      "id": 11,
-      "categoryId": 1,
-      "cropName": "Papaya",
-      "description": "A fast-growing tropical fruit known for its soft, buttery flesh and medicinal properties. Rich in Vitamin A and the enzyme papain.",
-      "image": null,
-      "scienceName": "Carica papaya L. Caricaceae",
-      "duration": "6–12 months (from planting to first harvest); productive for 3–4 years.",
-      "varieties": [
-        "Pusa Dwarf",
-        " Coorg Honey Dew",
-        " Solo",
-        " Red Lady"
-      ],
-      "soilClimate": "Well-drained, sandy loam soil is best. Highly sensitive to waterlogging. Requires a warm climate and is susceptible to frost. pH 6.0–7.0.",
-      "season": "Planted during the beginning of the rainy season (June–July) or early spring (Feb–March).",
-      "materials": "Seeds or seedlings (raised in polybags)",
-      "mainField": "Deep ploughing and harrowing. Plant seedlings in pits 50×50×50 cm. Plant 2-3 seedlings per pit to ensure at least one female or hermaphrodite plant survives.",
-      "weedControl": "Shallow cultivation to prevent root damage. Herbicides like Fluchloralin pre-planting or Glyphosate post-emergence can be used between plants.",
-      "irrigation": "Irrigate frequently but lightly, especially in dry months. Waterlogging must be avoided at all costs. Drip irrigation is recommended.",
-      "growthManagement": "Thinning to retain one healthy female or hermaphrodite plant per pit. Mulching helps conserve moisture and control weeds.",
-      "harvesting": "Harvested when the fruit shows a slight yellow streak (color break) at the distal end, or fully ripe if for local consumption.",
-      "createdAt": {
-        "_type": "Timestamp",
-        "value": "2025-10-20T13:00:52.890513"
-      }
-    },
-    "12": {
-      "id": 12,
-      "categoryId": 1,
-      "cropName": "Pineapple",
-      "description": "A tropical fruit known for its unique flavor and enzyme content (bromelain). Highly prized globally, often grown on raised beds.",
-      "image": null,
-      "scienceName": "Ananas comosus (L.) Merr. Bromeliaceae",
-      "duration": "18–24 months (to first fruit); 12–15 months (for ratoon crop).",
-      "varieties": [
-        "Queen",
-        " Kew",
-        " Mauritius",
-        " Smooth Cayenne"
-      ],
-      "soilClimate": "Grows well in slightly acidic ( pH 5.0–6.0), light, sandy loam soil. Needs moderate rainfall and good drainage.",
-      "season": "Planting is best done during the rainy season (June–September).",
-      "materials": "Suckers, slips, or crown sections (the top part of the fruit). Suckers are preferred for faster harvest.",
-      "mainField": "Prepare land by ploughing and harrowing. Plant in double or single rows on raised beds/trenches for drainage.",
-      "weedControl": "Regular manual weeding, especially in the first 6 months. Diuron is a common pre-emergence herbicide used to manage weeds.",
-      "irrigation": "A rainfed crop, but irrigation is critical during dry spells for better growth and fruit size. Water sparingly but regularly.",
-      "growthManagement": "Ethephon or NAA is commonly applied to induce uniform flowering and fruit set, which is essential for commercial harvesting.",
-      "harvesting": "Harvested when the fruit turns yellow-orange at the base. Use a sharp knife to cut the stalk with a few inches of stem attached.",
-      "createdAt": {
-        "_type": "Timestamp",
-        "value": "2025-10-20T13:00:52.890513"
-      }
-    },
-    "13": {
-      "id": 13,
-      "categoryId": 1,
-      "cropName": "Guava",
-      "description": "A common tropical fruit, highly tolerant and rich in Vitamin C, pectin, and antioxidants.",
-      "image": null,
-      "scienceName": "Psidium guajava L. Myrtaceae",
-      "duration": "Perennial; starts bearing 2–3 years after planting; productive for over 30 years.",
-      "varieties": [
-        "Allahabad Safeda",
-        " Sardar Guava",
-        " L-49 (Lucknow-49)"
-      ],
-      "soilClimate": "Adaptable to many soils, but thrives best in deep, well-drained clay loam or sandy loam. Tolerant of moderate alkalinity. pH 6.5–7.5.",
-      "season": "Planted during the beginning of the monsoon (July–August).",
-      "materials": "Grafted or air-layered plants (preferred over seed-grown for true-to-type yield).",
-      "mainField": "Dig pits 60×60×60 cm. Fill with topsoil, FYM, and a suitable insecticide. Plant the graft/layer in the center.",
-      "weedControl": "Keep the tree basin clean. Manual hoeing and mulching are common. Chemical control is less frequent; use systemic herbicides cautiously.",
-      "irrigation": "Young plants need regular irrigation. Mature trees are hardy but benefit from water during the fruit development stage, especially in hot, dry periods.",
-      "growthManagement": "Pruning is necessary to maintain shape and encourage new growth. Crop regulation (removing flowers/fruits in certain seasons) is done to ensure a quality main crop.",
-      "harvesting": "Harvested when the fruit changes from dark green to light green or yellowish-green, and is still firm. Hand picking is the standard method.",
-      "createdAt": {
-        "_type": "Timestamp",
-        "value": "2025-10-20T13:00:52.890513"
-      }
+"crops": {
+  "33": {
+    "id": 33,
+    "categoryId": 5,
+    "cropName": "Coconut",
+    "description": "A major plantation crop in tropical regions, providing food, oil, fiber, and a wide range of by-products. Known as the 'Tree of Life' in the Philippines.",
+    "image": null,
+    "scienceName": "Cocos nucifera L.",
+    "duration": "6–10 years for full yield; productive up to 60 years.",
+    "varieties": ["Tall (West Coast Tall, Laguna Tall)", "Dwarf (Tacunan Green Dwarf, Malayan Yellow Dwarf)"],
+    "soilClimate": "Thrives in humid tropical climate with 27–32°C temperature. Prefers well-drained sandy loam with pH 5.5–7.5.",
+    "season": "Plant anytime with adequate rainfall; best at onset of rainy season.",
+    "materials": "Use healthy, early-bearing seedlings from certified seed farms.",
+    "mainField": "Plant at 8–9 m spacing in triangular or square system. Provide irrigation and intercrops in early years.",
+    "weedControl": "Regular ring weeding around palm base. Mulching helps retain soil moisture.",
+    "irrigation": "Irrigate young palms every 7–10 days during dry season.",
+    "growthManagement": "Apply organic manure and fertilizers twice yearly. Control rhinoceros beetle and red palm weevil.",
+    "harvesting": "Harvest mature nuts every 45–60 days. Copra or fresh nuts processed depending on purpose.",
+    "createdAt": {
+      "_type": "Timestamp",
+      "value": "2025-10-27T16:00:00.111111"
     }
   },
+  "34": {
+    "id": 34,
+    "categoryId": 5,
+    "cropName": "Coffee",
+    "description": "A perennial plantation crop cultivated for its beans used in beverages. Grown widely in highland and mid-elevation areas.",
+    "image": null,
+    "scienceName": "Coffea spp.",
+    "duration": "Productive bearing starts at 3–4 years; economic life 20–30 years.",
+    "varieties": ["Arabica", "Robusta", "Liberica (Barako)", "Excelsa"],
+    "soilClimate": "Requires cool climate (18–24°C) with rainfall 1,500–2,500 mm/year. Prefers well-drained loamy soil, pH 6.0–6.5.",
+    "season": "Plant at onset of rainy season (May–July).",
+    "materials": "Use vigorous seedlings from disease-free mother plants.",
+    "mainField": "Plant at 2.5×2.5 m spacing under partial shade. Prune for shape and airflow.",
+    "weedControl": "Weed basins around trees 3–4 times a year.",
+    "irrigation": "Water during dry months to prevent flower drop.",
+    "growthManagement": "Apply organic compost annually. Control coffee rust and berry borer.",
+    "harvesting": "Harvest red ripe berries by hand-picking. Dry, hull, and sort beans for market.",
+    "createdAt": {
+      "_type": "Timestamp",
+      "value": "2025-10-27T16:10:00.222222"
+    }
+  },
+  "35": {
+    "id": 35,
+    "categoryId": 5,
+    "cropName": "Cacao",
+    "description": "A tropical plantation crop grown for its beans, used in making chocolate and cocoa products.",
+    "image": null,
+    "scienceName": "Theobroma cacao L.",
+    "duration": "Fruiting begins 3–4 years after planting; productive life 25–30 years.",
+    "varieties": ["Criollo", "Forastero", "Trinitario"],
+    "soilClimate": "Thrives in warm, humid climates (25–30°C) with rainfall over 1,200 mm/year. Prefers deep, loamy soil with pH 6.0–7.5.",
+    "season": "Plant at start of rainy season.",
+    "materials": "Use grafted seedlings from high-yielding varieties. Provide shade trees.",
+    "mainField": "Plant at 3×3 m spacing with shade crops. Maintain weed-free basins.",
+    "weedControl": "Manual weeding 3–4 times yearly or mulching to suppress weeds.",
+    "irrigation": "Provide light irrigation during dry months to maintain moisture.",
+    "growthManagement": "Regular pruning, fertilizer application, and pest control. Monitor pod borer and black pod disease.",
+    "harvesting": "Harvest mature pods every 15 days. Ferment, dry, and store beans properly.",
+    "createdAt": {
+      "_type": "Timestamp",
+      "value": "2025-10-27T16:20:00.333333"
+    }
+  },
+  "36": {
+    "id": 36,
+    "categoryId": 5,
+    "cropName": "Sugarcane",
+    "description": "A major industrial crop used for sugar and ethanol production. Also serves as raw material for vinegar and biofuel industries.",
+    "image": null,
+    "scienceName": "Saccharum officinarum L.",
+    "duration": "10–14 months from planting to harvest.",
+    "varieties": ["Phil 99-1793", "Phil 2000-1011", "Phil 8013", "VMC 86-550"],
+    "soilClimate": "Grows best in tropical climate (25–35°C) with deep, fertile loam soil and pH 6.0–8.0.",
+    "season": "Plant during dry months (October–February) for rainfed, or anytime for irrigated fields.",
+    "materials": "Use healthy cane setts (3–4 buds) from disease-free mother stalks.",
+    "mainField": "Prepare well-tilled land. Plant setts in furrows 1.2 m apart, 5–10 cm deep.",
+    "weedControl": "Weed at 30, 60, and 90 days after planting or use pre-emergence herbicides.",
+    "irrigation": "Irrigate every 10–15 days during dry season.",
+    "growthManagement": "Apply nitrogen-rich fertilizers and organic manure. Control stem borers and smut disease.",
+    "harvesting": "Harvest when stalks are mature (10–14 months). Cut close to ground level for ratooning.",
+    "createdAt": {
+      "_type": "Timestamp",
+      "value": "2025-10-27T16:30:00.444444"
+    }
+  },
+  "37": {
+    "id": 37,
+    "categoryId": 5,
+    "cropName": "Oil Palm",
+    "description": "A high-value plantation crop grown for its edible oil extracted from fruit pulp and kernel, used in food and industry.",
+    "image": null,
+    "scienceName": "Elaeis guineensis Jacq.",
+    "duration": "Begins bearing 3–4 years after planting; economic life up to 25 years.",
+    "varieties": ["Tenera", "Dura", "Pisifera"],
+    "soilClimate": "Requires warm climate (24–32°C) and well-drained deep loamy soil, pH 4.5–6.5.",
+    "season": "Plant at onset of rains for best establishment.",
+    "materials": "Use hybrid tenera seedlings from certified nurseries.",
+    "mainField": "Plant at 9×9 m triangular spacing. Maintain good drainage channels.",
+    "weedControl": "Manual or chemical weeding in basins. Mulch to prevent erosion.",
+    "irrigation": "Supplemental irrigation during prolonged dry spells.",
+    "growthManagement": "Apply balanced fertilizer annually. Control rhinoceros beetle and leaf miner pests.",
+    "harvesting": "Harvest ripe fruit bunches every 10–14 days once trees start bearing.",
+    "createdAt": {
+      "_type": "Timestamp",
+      "value": "2025-10-27T16:40:00.555555"
+    }
+  }
+},
   "procedures": {
     "1": {
       "id": 1,

@@ -1,8 +1,11 @@
 package com.cma.thesis.cropmanagementapp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +16,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
@@ -34,6 +40,7 @@ import java.util.Map;
 public class Activity_AdminCropForm extends AppCompatActivity {
     
     private static final int REQUEST_IMAGE_PICK = 2001;
+    private static final int REQUEST_PERMISSION_READ_MEDIA = 2002;
     
     // UI Components
     private ImageView ivCropPreview;
@@ -126,9 +133,52 @@ public class Activity_AdminCropForm extends AppCompatActivity {
     }
     
     private void openImagePicker() {
+        // Check and request permissions based on Android version
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ (API 33+) - Use READ_MEDIA_IMAGES
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) 
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                        REQUEST_PERMISSION_READ_MEDIA);
+                return;
+            }
+        } else {
+            // Android 12 and below - Use READ_EXTERNAL_STORAGE
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) 
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_PERMISSION_READ_MEDIA);
+                return;
+            }
+        }
+        
+        // Permission granted, open image picker
+        launchImagePicker();
+    }
+    
+    private void launchImagePicker() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_IMAGE_PICK);
+    }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, 
+            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        
+        if (requestCode == REQUEST_PERMISSION_READ_MEDIA) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, open image picker
+                launchImagePicker();
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Permission denied. Cannot access images.", 
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     
     @Override

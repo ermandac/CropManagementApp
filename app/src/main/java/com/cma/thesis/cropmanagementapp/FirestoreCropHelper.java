@@ -14,6 +14,8 @@ public class FirestoreCropHelper {
     private static final String TAG = "FirestoreCropHelper";
     private FirebaseFirestore db;
 
+
+
     public FirestoreCropHelper() {
         this.db = FirebaseFirestore.getInstance();
     }
@@ -58,6 +60,8 @@ public class FirestoreCropHelper {
             String description = doc.getString("description") != null ? doc.getString("description") : "";
             String scienceName = doc.getString("scienceName") != null ? doc.getString("scienceName") : "";
             String duration = doc.getString("duration") != null ? doc.getString("duration") : "";
+            String weedControl = doc.getString("weedControl") != null ? doc.getString("weedControl") : "";
+            String materials = doc.getString("materials") != null ? doc.getString("materials") : "";
             String varieties = getArrayAsString(doc, "varieties");
             String soilClimate = doc.getString("soilClimate") != null ? doc.getString("soilClimate") : "";
             String season = doc.getString("season") != null ? doc.getString("season") : "";
@@ -81,7 +85,9 @@ public class FirestoreCropHelper {
                     irrigation,
                     growthManagement,
                     harvesting,
-                    image
+                    image,
+                    weedControl,
+                    materials
             );
         } catch (Exception e) {
             Log.e(TAG, "Error creating Class_Crops from document: " + e.getMessage());

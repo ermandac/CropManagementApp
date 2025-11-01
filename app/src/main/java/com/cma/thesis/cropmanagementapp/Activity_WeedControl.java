@@ -45,7 +45,7 @@ public class Activity_WeedControl extends AppCompatActivity {
     private void populateWeedsFromLocal(String cropId) {
         weedslist.clear();
         Class_DatabaseHelper db = new Class_DatabaseHelper(this);
-        String weeds = db.getCropFieldById(cropId, "weed_control");
+        String weeds = db.getCropFieldById(cropId, "weedControl");
         if (weeds != null && !weeds.trim().isEmpty()) {
             // Split by newlines or commas
             for (String v : weeds.split("\\r?\\n|,")) {

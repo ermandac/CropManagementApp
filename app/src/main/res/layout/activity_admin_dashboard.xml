@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:rowCount="4"
+                android:rowCount="5"
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false">
 
@@ -346,9 +346,9 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Organic Farming -->
+                <!-- Pest Management -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardOrganic"
+                    android:id="@+id/cardPest"
                     android:layout_width="0dp"
                     android:layout_height="160dp"
                     android:layout_row="3"
@@ -371,32 +371,32 @@
                         <ImageView
                             android:layout_width="64dp"
                             android:layout_height="64dp"
-                            android:src="@drawable/ic_category_organic"
-                            android:contentDescription="Organic Farming" />
+                            android:src="@drawable/ic_pest"
+                            android:contentDescription="Pest Management" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Organic"
+                            android:text="Pest Management"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimaryDark"
                             android:layout_marginTop="12dp" />
 
                         <TextView
-                            android:id="@+id/tvOrganicCount"
+                            android:id="@+id/tvPestCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 crops"
+                            android:text="0 items"
                             android:textSize="12sp"
                             android:textColor="@android:color/darker_gray"
                             android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Pest Control -->
+                <!-- Organic Farming -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardPest"
+                    android:id="@+id/cardOrganic"
                     android:layout_width="0dp"
                     android:layout_height="160dp"
                     android:layout_row="3"
@@ -419,23 +419,119 @@
                         <ImageView
                             android:layout_width="64dp"
                             android:layout_height="64dp"
-                            android:src="@drawable/ic_category_pest"
-                            android:contentDescription="Pest Control" />
+                            android:src="@drawable/ic_organic"
+                            android:contentDescription="Organic Farming" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pest Control"
+                            android:text="Organic Farming"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimaryDark"
                             android:layout_marginTop="12dp" />
 
                         <TextView
-                            android:id="@+id/tvPestCount"
+                            android:id="@+id/tvOrganicCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 crops"
+                            android:text="0 items"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/darker_gray"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Fertilizers -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFertilizer"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_row="4"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_fertilizer"
+                            android:contentDescription="Fertilizers" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fertilizers"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_marginTop="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvFertilizerCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 items"
+                            android:textSize="12sp"
+                            android:textColor="@android:color/darker_gray"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Suggested Crops -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardSuggestedCrop"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_row="4"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_suggested_crop"
+                            android:contentDescription="Suggested Crops" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Suggested Crops"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_marginTop="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvSuggestedCropCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 items"
                             android:textSize="12sp"
                             android:textColor="@android:color/darker_gray"
                             android:layout_marginTop="4dp" />

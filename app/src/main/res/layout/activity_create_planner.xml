@@ -37,7 +37,7 @@
             android:id="@+id/radioSabongTanim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sabong Tanim (Direct Seeding)"
+            android:text="Sabog Tanim (Direct Seeding)"
             android:checked="true" />
 
         <RadioButton

@@ -52,93 +52,114 @@ public class PlannerNotificationManager {
     }
 
     /**
-     * Schedule notifications for all steps of a plan
+     * Schedule harvest notification for end date - SIMPLIFIED VERSION
+     * Works completely offline!
+     * @param planId Unique plan identifier
+     * @param cropName Name of the crop
+     * @param endDate Harvest date in MM/dd/yyyy format
      */
-    public void scheduleNotificationsForPlan(String planId, int cropId, String startDate,
-                                             ArrayList<Class_Procedure> steps) {
-        if (steps == null || steps.isEmpty()) {
-            Log.w(TAG, "No steps to schedule for plan: " + planId);
-            return;
-        }
-
+    public void scheduleHarvestNotification(String planId, String cropName, String cropId, String endDate) {
         try {
-            for (Class_Procedure step : steps) {
-                scheduleStepNotification(planId, cropId, startDate, step);
-            }
-            Log.d(TAG, "Scheduled " + steps.size() + " notifications for plan: " + planId);
-        } catch (Exception e) {
-            Log.e(TAG, "Error scheduling notifications: " + e.getMessage());
-        }
-    }
+            Log.d(TAG, "📅 scheduleHarvestNotification called");
+            long notificationTime = calculateHarvestTime(endDate);
+            long currentTime = System.currentTimeMillis();
+            long delaySeconds = (notificationTime - currentTime) / 1000;
+            
+            Log.d(TAG, "   Current time: " + new Date(currentTime));
+            Log.d(TAG, "   Notification time: " + new Date(notificationTime));
+            Log.d(TAG, "   Delay: " + delaySeconds + " seconds");
 
-    /**
-     * Schedule notification for a single step
-     */
-    private void scheduleStepNotification(String planId, int cropId, String startDate,
-                                          Class_Procedure step) {
-        try {
-            long notificationTime = calculateNotificationTimeMillis(startDate, step.getDaysNotif());
-
-            if (notificationTime > System.currentTimeMillis()) {
+            // Only schedule if the date is in the future
+            if (notificationTime > currentTime) {
                 Intent notificationIntent = new Intent(context, NotificationBroadcastReceiver.class);
                 notificationIntent.putExtra("planId", planId);
+                notificationIntent.putExtra("cropName", cropName);
                 notificationIntent.putExtra("cropId", cropId);
-                notificationIntent.putExtra("stepId", step.getId());
-                notificationIntent.putExtra("stepNumber", step.getStep());
-                notificationIntent.putExtra("stepName", step.getProcedure());
+                notificationIntent.putExtra("endDate", endDate);
+                notificationIntent.putExtra("isHarvestNotification", true);
 
-                int requestCode = (planId + "_" + step.getId()).hashCode();
+                int requestCode = ("harvest_" + planId).hashCode();
+                Log.d(TAG, "   Request code: " + requestCode);
+                
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, notificationIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 if (alarmManager != null) {
-                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent);
-                    Log.d(TAG, "Scheduled notification for step " + step.getStep() +
-                            " at " + new Date(notificationTime));
+                    // Check if we can schedule exact alarms (Android 12+)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        if (alarmManager.canScheduleExactAlarms()) {
+                            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent);
+                            Log.d(TAG, "✅ Exact alarm scheduled (Android 12+) for " + cropName + " at " + new Date(notificationTime));
+                        } else {
+                            Log.e(TAG, "❌ Cannot schedule exact alarms - permission denied!");
+                            // Fall back to inexact alarm
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent);
+                            Log.d(TAG, "⚠️ Using inexact alarm instead");
+                        }
+                    } else {
+                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, notificationTime, pendingIntent);
+                        Log.d(TAG, "✅ Exact alarm scheduled for " + cropName + " at " + new Date(notificationTime));
+                    }
+                } else {
+                    Log.e(TAG, "❌ AlarmManager is null!");
                 }
+            } else {
+                Log.w(TAG, "⚠️ End date is in the past - no notification scheduled");
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error scheduling step notification: " + e.getMessage());
+            Log.e(TAG, "❌ Error scheduling harvest notification: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     /**
-     * Calculate notification time in milliseconds from current time to notification date
+     * Calculate harvest notification time (8:00 AM on harvest date)
+     * 
+     * ✅ PRODUCTION MODE: Notifications scheduled for actual harvest date at 8:00 AM
      */
-    private long calculateNotificationTimeMillis(String startDate, int daysToAdd) {
+    private long calculateHarvestTime(String endDate) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            Date date = sdf.parse(startDate);
+            Date date = sdf.parse(endDate);
+            
+            if (date == null) {
+                Log.e(TAG, "Failed to parse date: " + endDate);
+                return System.currentTimeMillis();
+            }
+            
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
-
+            calendar.set(Calendar.HOUR_OF_DAY, 8);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            
+            Log.d(TAG, "✅ Notification scheduled for: " + new Date(calendar.getTimeInMillis()));
             return calendar.getTimeInMillis();
         } catch (Exception e) {
-            Log.e(TAG, "Error calculating notification time: " + e.getMessage());
+            Log.e(TAG, "Error calculating harvest time: " + e.getMessage());
+            e.printStackTrace();
             return System.currentTimeMillis();
         }
     }
 
     /**
-     * Cancel notifications for a plan
+     * Cancel harvest notification for a plan
      */
-    public void cancelNotificationsForPlan(String planId, ArrayList<Class_Procedure> steps) {
+    public void cancelHarvestNotification(String planId) {
         try {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            if (alarmManager != null && steps != null) {
-                for (Class_Procedure step : steps) {
-                    Intent notificationIntent = new Intent(context, NotificationBroadcastReceiver.class);
-                    int requestCode = (planId + "_" + step.getId()).hashCode();
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, notificationIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-                    alarmManager.cancel(pendingIntent);
-                }
+            if (alarmManager != null) {
+                Intent notificationIntent = new Intent(context, NotificationBroadcastReceiver.class);
+                int requestCode = ("harvest_" + planId).hashCode();
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, notificationIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                alarmManager.cancel(pendingIntent);
+                Log.d(TAG, "Cancelled harvest notification for plan: " + planId);
             }
-            Log.d(TAG, "Cancelled notifications for plan: " + planId);
         } catch (Exception e) {
-            Log.e(TAG, "Error cancelling notifications: " + e.getMessage());
+            Log.e(TAG, "Error cancelling harvest notification: " + e.getMessage());
         }
     }
 
@@ -179,24 +200,41 @@ public class PlannerNotificationManager {
 
         @Override
         public void onReceive(android.content.Context context, Intent intent) {
+            Log.d(TAG, "🔔 BroadcastReceiver.onReceive() CALLED!");
             try {
+                String cropName = intent.getStringExtra("cropName");
+                String cropId = intent.getStringExtra("cropId");
                 String planId = intent.getStringExtra("planId");
-                String stepName = intent.getStringExtra("stepName");
-                int stepNumber = intent.getIntExtra("stepNumber", 0);
+                boolean isHarvest = intent.getBooleanExtra("isHarvestNotification", false);
+                
+                Log.d(TAG, "   cropName: " + cropName);
+                Log.d(TAG, "   cropId: " + cropId);
+                Log.d(TAG, "   planId: " + planId);
+                Log.d(TAG, "   isHarvest: " + isHarvest);
 
-                String title = "Crop Plan Reminder - Step " + stepNumber;
-                String message = stepName;
-
-                sendNotification(context, title, message, stepNumber);
-                Log.d(TAG, "Notification delivered for step: " + stepNumber);
+                if (isHarvest && cropName != null) {
+                    String title = "🌾 Harvest Time!";
+                    String message = "Your " + cropName + " is ready for harvest today!";
+                    
+                    Log.d(TAG, "   About to send notification...");
+                    sendNotification(context, title, message, cropId, cropName.hashCode());
+                    Log.d(TAG, "✅ Harvest notification delivered for: " + cropName);
+                } else {
+                    Log.w(TAG, "⚠️ Not sending notification - isHarvest=" + isHarvest + ", cropName=" + cropName);
+                }
             } catch (Exception e) {
-                Log.e(TAG, "Error in NotificationBroadcastReceiver: " + e.getMessage());
+                Log.e(TAG, "❌ Error in NotificationBroadcastReceiver: " + e.getMessage());
+                e.printStackTrace();
             }
         }
 
-        private void sendNotification(android.content.Context context, String title, String message, int notificationId) {
+        private void sendNotification(android.content.Context context, String title, String message, String cropId, int notificationId) {
             try {
+                // Open the crop planner activity with the crop ID
                 Intent intent = new Intent(context, Activity_CreatePlannerActivity.class);
+                intent.putExtra("passedID", cropId);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 

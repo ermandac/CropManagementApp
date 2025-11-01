@@ -30,16 +30,21 @@
 
         <item
             android:id="@+id/nav_suggested"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_suggested_crop"
             android:title="Suggested Crops" />
 
         <item
             android:id="@+id/nav_fertilizers"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_fertilizer"
             android:title="Fertilizers" />
     </group>
 
     <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_help_faq"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="Help &amp; FAQ" />
+
         <item
             android:id="@+id/nav_admin_panel"
             android:icon="@drawable/ic_menu_manage"

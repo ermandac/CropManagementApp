@@ -93,6 +93,23 @@ public class Activity_CreatePlannerActivity extends AppCompatActivity {
                 showCreatePlanDialog();
             }
         });
+        
+        // 🧪 TEST: Long-press button to send immediate test notification
+        btnCreatePlan.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                PlannerNotificationManager testNotif = new PlannerNotificationManager(Activity_CreatePlannerActivity.this);
+                testNotif.sendImmediateNotification(
+                    "🧪 Test Notification",
+                    "If you see this, notifications are working!",
+                    999
+                );
+                Toast.makeText(Activity_CreatePlannerActivity.this,
+                    "Test notification sent! Check your notification panel.",
+                    Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
 
         // Load existing plans
         loadPlans(cropID);
@@ -252,7 +269,7 @@ public class Activity_CreatePlannerActivity extends AppCompatActivity {
         int selectedMethodId = radioGroupPlantingMethod.getCheckedRadioButtonId();
         final String plantingMethod;
         if (selectedMethodId == R.id.radioSabongTanim) {
-            plantingMethod = "SABONG_TANIM";
+            plantingMethod = "SABOG_TANIM";
         } else {
             plantingMethod = "LIPAT_TANIM";
         }
@@ -282,7 +299,7 @@ public class Activity_CreatePlannerActivity extends AppCompatActivity {
                             
                             // Schedule notifications if enabled
                             if (notificationsEnabled) {
-                                scheduleNotificationsForPlan(cropID, startDateStr);
+                                scheduleNotificationsForPlan(cropID, crop.getCropname(), endDateStr);
                             }
                         }
 
@@ -308,30 +325,34 @@ public class Activity_CreatePlannerActivity extends AppCompatActivity {
         });
     }
 
-    private void scheduleNotificationsForPlan(String cropId, String startDate) {
+    private void scheduleNotificationsForPlan(String cropId, String cropName, String endDate) {
         try {
-            int cropIdInt = Integer.parseInt(cropId);
+            Log.d(TAG, "🔔 scheduleNotificationsForPlan CALLED!");
+            Log.d(TAG, "   cropId: " + cropId);
+            Log.d(TAG, "   cropName: " + cropName);
+            Log.d(TAG, "   endDate: " + endDate);
             
-            // Load procedure steps for the crop from Firestore (crop data still synced)
-            FirestorePlannerHelper firestorePlannerHelper = new FirestorePlannerHelper();
-            firestorePlannerHelper.getPlanSteps(cropIdInt, startDate, new FirestorePlannerHelper.StepsCallback() {
-                @Override
-                public void onSuccess(ArrayList<Class_Procedure> steps) {
-                    if (steps != null && !steps.isEmpty()) {
-                        PlannerNotificationManager notificationManager = new PlannerNotificationManager(Activity_CreatePlannerActivity.this);
-                        notificationManager.scheduleNotificationsForPlan(cropId, cropIdInt, startDate, steps);
-                        Toast.makeText(Activity_CreatePlannerActivity.this, 
-                            "Notifications scheduled for " + steps.size() + " steps", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onError(String error) {
-                    Log.e(TAG, "Error loading steps for notifications: " + error);
-                }
-            });
+            // Simple harvest notification - works offline!
+            PlannerNotificationManager notificationManager = new PlannerNotificationManager(this);
+            String planId = cropId + "_" + System.currentTimeMillis();
+            
+            Log.d(TAG, "   planId: " + planId);
+            Log.d(TAG, "   About to call scheduleHarvestNotification...");
+            
+            notificationManager.scheduleHarvestNotification(planId, cropName, cropId, endDate);
+            
+            Log.d(TAG, "✅ Harvest notification scheduled for " + cropName + " on " + endDate);
+            
+            // Show user confirmation
+            Toast.makeText(this, 
+                "✅ Notification scheduled! You'll receive a harvest reminder on " + endDate + " at 8:00 AM.", 
+                Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            Log.e(TAG, "Error scheduling notifications: " + e.getMessage());
+            Log.e(TAG, "❌ Error scheduling notifications: " + e.getMessage());
+            e.printStackTrace();
+            Toast.makeText(this, 
+                "❌ Error scheduling notification: " + e.getMessage(), 
+                Toast.LENGTH_LONG).show();
         }
     }
 
@@ -392,7 +413,7 @@ public class Activity_CreatePlannerActivity extends AppCompatActivity {
                           "Current:\n" +
                           "Start: " + plan.getStartDate() + "\n" +
                           "End: " + plan.getEndDate() + "\n" +
-                          "Method: " + (plan.getPlantingMethod().equals("SABONG_TANIM") ? "Sabong Tanim" : "Lipat Tanim"));
+                          "Method: " + (plan.getPlantingMethod().equals("SABOG_TANIM") ? "Sabog Tanim" : "Lipat Tanim"));
         
         builder.setPositiveButton("EDIT DATES", new DialogInterface.OnClickListener() {
             @Override
@@ -528,15 +549,15 @@ public class Activity_CreatePlannerActivity extends AppCompatActivity {
     }
 
     private void showChangePlantingMethodDialog(final Class_Planner plan, final int position) {
-        final String[] methods = {"Sabong Tanim (Direct Seeding)", "Lipat Tanim (Transplanting)"};
-        int currentSelection = plan.getPlantingMethod().equals("SABONG_TANIM") ? 0 : 1;
+        final String[] methods = {"Sabog Tanim (Direct Seeding)", "Lipat Tanim (Transplanting)"};
+        int currentSelection = plan.getPlantingMethod().equals("SABOG_TANIM") ? 0 : 1;
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Change Planting Method");
         builder.setSingleChoiceItems(methods, currentSelection, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newMethod = (which == 0) ? "SABONG_TANIM" : "LIPAT_TANIM";
+                String newMethod = (which == 0) ? "SABOG_TANIM" : "LIPAT_TANIM";
                 updatePlantingMethod(plan, position, newMethod);
                 dialog.dismiss();
             }
