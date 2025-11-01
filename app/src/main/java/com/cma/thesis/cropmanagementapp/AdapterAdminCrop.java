@@ -1,6 +1,8 @@
 package com.cma.thesis.cropmanagementapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,14 +64,52 @@ public class AdapterAdminCrop extends RecyclerView.Adapter<AdapterAdminCrop.Crop
         holder.tvScienceName.setText(scienceName != null ? scienceName : "");
         holder.tvDuration.setText(duration != null ? duration : "");
         
-        // Load image using Glide
+        // Load image - check for Base64 encoding
         if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(context)
-                    .load(imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.plants)
-                    .error(R.drawable.plants)
-                    .into(holder.ivCropImage);
+            // Check if it's Base64 encoded image
+            if (imageUrl.startsWith("base64:")) {
+                // Remove the "base64:" prefix
+                String base64String = imageUrl.substring(7);
+                
+                try {
+                    // Decode Base64 string to byte array
+                    byte[] decodedBytes = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT);
+                    
+                    // Convert byte array to Bitmap
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    
+                    if (bitmap != null) {
+                        // Display the bitmap
+                        holder.ivCropImage.setImageBitmap(bitmap);
+                    } else {
+                        // Failed to decode, use placeholder
+                        holder.ivCropImage.setImageResource(R.drawable.plants);
+                    }
+                } catch (Exception e) {
+                    // Error decoding Base64, use placeholder
+                    holder.ivCropImage.setImageResource(R.drawable.plants);
+                }
+            } else {
+                // Assume it's a URL or local file path (legacy data)
+                File imageFile = new File(imageUrl);
+                if (imageFile.exists()) {
+                    // Local file path
+                    Glide.with(context)
+                        .load(imageFile)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.plants)
+                        .error(R.drawable.plants)
+                        .into(holder.ivCropImage);
+                } else {
+                    // Assume it's a URL
+                    Glide.with(context)
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.plants)
+                        .error(R.drawable.plants)
+                        .into(holder.ivCropImage);
+                }
+            }
         } else {
             holder.ivCropImage.setImageResource(R.drawable.plants);
         }

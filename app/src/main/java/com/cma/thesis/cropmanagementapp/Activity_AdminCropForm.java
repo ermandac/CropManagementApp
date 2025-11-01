@@ -53,7 +53,9 @@ public class Activity_AdminCropForm extends AppCompatActivity {
     private TextInputEditText etVarieties;
     private TextInputEditText etSoilClimate;
     private TextInputEditText etSeason;
+    private TextInputEditText etMaterials;
     private TextInputEditText etMainField;
+    private TextInputEditText etWeedControl;
     private TextInputEditText etIrrigation;
     private TextInputEditText etGrowthManagement;
     private TextInputEditText etHarvesting;
@@ -119,7 +121,9 @@ public class Activity_AdminCropForm extends AppCompatActivity {
         etVarieties = findViewById(R.id.et_varieties);
         etSoilClimate = findViewById(R.id.et_soil_climate);
         etSeason = findViewById(R.id.et_season);
+        etMaterials = findViewById(R.id.et_materials);
         etMainField = findViewById(R.id.et_main_field);
+        etWeedControl = findViewById(R.id.et_weed_control);
         etIrrigation = findViewById(R.id.et_irrigation);
         etGrowthManagement = findViewById(R.id.et_growth_management);
         etHarvesting = findViewById(R.id.et_harvesting);
@@ -227,7 +231,9 @@ public class Activity_AdminCropForm extends AppCompatActivity {
                         
                         etSoilClimate.setText(document.getString("soilClimate"));
                         etSeason.setText(document.getString("season"));
+                        etMaterials.setText(document.getString("materials"));
                         etMainField.setText(document.getString("mainField"));
+                        etWeedControl.setText(document.getString("weedControl"));
                         etIrrigation.setText(document.getString("irrigation"));
                         etGrowthManagement.setText(document.getString("growthManagement"));
                         etHarvesting.setText(document.getString("harvesting"));
@@ -235,9 +241,25 @@ public class Activity_AdminCropForm extends AppCompatActivity {
                         // Load existing image
                         existingImageUrl = document.getString("image");
                         if (existingImageUrl != null && !existingImageUrl.isEmpty()) {
-                            Glide.with(this)
-                                    .load(existingImageUrl)
-                                    .into(ivCropPreview);
+                            // Check if it's Base64 encoded
+                            if (existingImageUrl.startsWith("base64:")) {
+                                // Decode Base64 and display
+                                String base64String = existingImageUrl.substring(7);
+                                try {
+                                    byte[] decodedBytes = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT);
+                                    android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                                    if (bitmap != null) {
+                                        ivCropPreview.setImageBitmap(bitmap);
+                                    }
+                                } catch (Exception e) {
+                                    Log.e("AdminCropForm", "Error decoding Base64 image", e);
+                                }
+                            } else {
+                                // Load from URL or local path using Glide
+                                Glide.with(this)
+                                        .load(existingImageUrl)
+                                        .into(ivCropPreview);
+                            }
                         }
                     } catch (Exception e) {
                         Toast.makeText(this, "Error parsing crop data: " + e.getMessage(), 
@@ -295,28 +317,34 @@ public class Activity_AdminCropForm extends AppCompatActivity {
             return;
         }
         
-        // Upload to Firebase Storage
-        imageHelper.uploadToFirebaseStorage(compressedFile, categoryId, cropName)
-                .addOnSuccessListener(downloadUri -> {
-                    // If editing and had old image, delete it
-                    if (isEditMode && existingImageUrl != null && !existingImageUrl.isEmpty()) {
-                        imageHelper.deleteFromFirebaseStorage(existingImageUrl);
-                    }
-                    
-                    // Save crop data with new image URL
-                    saveCropData(downloadUri.toString());
-                })
-                .addOnFailureListener(e -> {
-                    loadingOverlay.setVisibility(View.GONE);
-                    btnSave.setEnabled(true);
-                    Toast.makeText(this, "Error uploading image: " + e.getMessage(), 
-                            Toast.LENGTH_SHORT).show();
-                });
+        // Convert to Base64 for Firestore storage (multi-device sync)
+        String base64Image = imageHelper.convertImageToBase64(compressedFile);
+        
+        if (base64Image == null) {
+            loadingOverlay.setVisibility(View.GONE);
+            btnSave.setEnabled(true);
+            Toast.makeText(this, "Error processing image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Prefix with "base64:" to distinguish from old local paths
+        String imageData = "base64:" + base64Image;
+        
+        // Save crop data with Base64 image data
+        saveCropData(imageData);
     }
     
     private void saveCropData(String imageUrl) {
         // Prepare crop data
         Map<String, Object> cropData = new HashMap<>();
+        
+        // Generate ID for new crops (use timestamp), preserve for edits
+        if (!isEditMode) {
+            // For new crops, generate a unique ID based on timestamp
+            long newId = System.currentTimeMillis() / 1000; // Unix timestamp in seconds
+            cropData.put("id", newId);
+        }
+        
         // Convert categoryId to integer for Firestore
         try {
             cropData.put("categoryId", Integer.parseInt(categoryId));
@@ -346,26 +374,39 @@ public class Activity_AdminCropForm extends AppCompatActivity {
         
         cropData.put("soilClimate", etSoilClimate.getText().toString().trim());
         cropData.put("season", etSeason.getText().toString().trim());
+        cropData.put("materials", etMaterials.getText().toString().trim());
         cropData.put("mainField", etMainField.getText().toString().trim());
+        cropData.put("weedControl", etWeedControl.getText().toString().trim());
         cropData.put("irrigation", etIrrigation.getText().toString().trim());
         cropData.put("growthManagement", etGrowthManagement.getText().toString().trim());
         cropData.put("harvesting", etHarvesting.getText().toString().trim());
         cropData.put("image", imageUrl);
         
         if (isEditMode) {
-            // Update existing crop
-            firestoreHelper.updateCrop(cropId, cropData, task -> {
-                loadingOverlay.setVisibility(View.GONE);
-                btnSave.setEnabled(true);
-                
-                if (task.isSuccessful()) {
-                    Toast.makeText(this, "Crop updated successfully", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    Toast.makeText(this, "Error updating crop: " + task.getException().getMessage(), 
-                            Toast.LENGTH_SHORT).show();
+            // Before updating, get the existing ID and preserve it
+            firestoreHelper.getCropById(cropId, getTask -> {
+                if (getTask.isSuccessful() && getTask.getResult().exists()) {
+                    DocumentSnapshot doc = getTask.getResult();
+                    Object existingId = doc.get("id");
+                    if (existingId != null) {
+                        cropData.put("id", existingId);
+                    }
                 }
+                
+                // Update existing crop
+                firestoreHelper.updateCrop(cropId, cropData, task -> {
+                    loadingOverlay.setVisibility(View.GONE);
+                    btnSave.setEnabled(true);
+                    
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Crop updated successfully", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Error updating crop: " + task.getException().getMessage(), 
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         } else {
             // Add new crop

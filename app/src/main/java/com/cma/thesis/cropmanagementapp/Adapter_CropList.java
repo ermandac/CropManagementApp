@@ -11,6 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class Adapter_CropList extends BaseAdapter {
@@ -71,8 +74,51 @@ public class Adapter_CropList extends BaseAdapter {
         // Set season
         holder.season.setText(crop.getSeason() != null ? crop.getSeason() : "N/A");
 
-        // Set crop icon (placeholder for now)
-        holder.cropIcon.setImageResource(R.drawable.plants);
+        // Set crop image
+        String imageData = crop.getImage();
+        if (imageData != null && !imageData.isEmpty()) {
+            // Check if it's Base64 encoded image
+            if (imageData.startsWith("base64:")) {
+                // Remove the "base64:" prefix
+                String base64String = imageData.substring(7);
+                
+                try {
+                    // Decode Base64 string to byte array
+                    byte[] decodedBytes = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT);
+                    
+                    // Convert byte array to Bitmap
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    
+                    if (bitmap != null) {
+                        // Display the bitmap
+                        holder.cropIcon.setImageBitmap(bitmap);
+                    } else {
+                        // Failed to decode, use placeholder
+                        holder.cropIcon.setImageResource(R.drawable.plants);
+                    }
+                } catch (Exception e) {
+                    // Error decoding Base64, use placeholder
+                    holder.cropIcon.setImageResource(R.drawable.plants);
+                }
+            } else {
+                // Assume it's a local file path (legacy data)
+                File imageFile = new File(imageData);
+                if (imageFile.exists()) {
+                    Glide.with(context)
+                        .load(imageFile)
+                        .placeholder(R.drawable.plants)
+                        .error(R.drawable.plants)
+                        .centerCrop()
+                        .into(holder.cropIcon);
+                } else {
+                    // File doesn't exist, use placeholder
+                    holder.cropIcon.setImageResource(R.drawable.plants);
+                }
+            }
+        } else {
+            // No image data, use placeholder
+            holder.cropIcon.setImageResource(R.drawable.plants);
+        }
 
         return convertView;
     }

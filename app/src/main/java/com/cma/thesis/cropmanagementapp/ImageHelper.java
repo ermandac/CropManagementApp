@@ -107,6 +107,117 @@ public class ImageHelper {
     }
     
     /**
+     * Convert image file to Base64 string for Firestore storage
+     * @param imageFile File to convert
+     * @return Base64 encoded string or null if conversion fails
+     */
+    public String convertImageToBase64(File imageFile) {
+        try {
+            // Read file into byte array
+            java.io.FileInputStream fis = new java.io.FileInputStream(imageFile);
+            java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+            
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                baos.write(buffer, 0, length);
+            }
+            
+            fis.close();
+            
+            // Convert to Base64
+            byte[] imageBytes = baos.toByteArray();
+            String base64String = android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT);
+            
+            Log.d(TAG, "Image converted to Base64. Size: " + base64String.length() + " characters");
+            
+            return base64String;
+        } catch (Exception e) {
+            Log.e(TAG, "Error converting image to Base64: " + e.getMessage(), e);
+            return null;
+        }
+    }
+    
+    /**
+     * Save image to local internal storage (alternative to Firebase Storage for POC)
+     * @param context Application context
+     * @param imageFile File to save
+     * @param categoryId Category ID for organizing storage
+     * @param cropName Crop name for file naming
+     * @return Local file path or null if save fails
+     */
+    public String saveToLocalStorage(Context context, File imageFile, String categoryId, String cropName) {
+        try {
+            // Create directory structure: app_images/crops/{categoryId}/
+            File imagesDir = new File(context.getFilesDir(), "app_images/crops/" + categoryId);
+            if (!imagesDir.exists()) {
+                if (!imagesDir.mkdirs()) {
+                    Log.e(TAG, "Failed to create directory: " + imagesDir.getAbsolutePath());
+                    return null;
+                }
+            }
+            
+            // Create unique filename: {cropName}_{timestamp}.jpg
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            String sanitizedCropName = cropName.replaceAll("[^a-zA-Z0-9]", "_");
+            String filename = sanitizedCropName + "_" + timestamp + ".jpg";
+            
+            File destinationFile = new File(imagesDir, filename);
+            
+            // Copy compressed file to internal storage
+            java.io.FileInputStream fis = new java.io.FileInputStream(imageFile);
+            java.io.FileOutputStream fos = new java.io.FileOutputStream(destinationFile);
+            
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
+            }
+            
+            fis.close();
+            fos.close();
+            
+            String localPath = destinationFile.getAbsolutePath();
+            Log.d(TAG, "Image saved to local storage: " + localPath);
+            
+            return localPath;
+        } catch (IOException e) {
+            Log.e(TAG, "Error saving image to local storage: " + e.getMessage(), e);
+            return null;
+        }
+    }
+    
+    /**
+     * Delete image from local storage
+     * @param localPath Absolute path to the local image file
+     * @return true if deleted successfully, false otherwise
+     */
+    public boolean deleteFromLocalStorage(String localPath) {
+        try {
+            if (localPath == null || localPath.isEmpty()) {
+                return false;
+            }
+            
+            File file = new File(localPath);
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (deleted) {
+                    Log.d(TAG, "Image deleted from local storage: " + localPath);
+                } else {
+                    Log.e(TAG, "Failed to delete image: " + localPath);
+                }
+                return deleted;
+            } else {
+                Log.w(TAG, "Image file does not exist: " + localPath);
+                return false;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error deleting image from local storage: " + e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
      * Upload image to Firebase Storage
      * @param imageFile File to upload
      * @param categoryId Category ID for organizing storage
